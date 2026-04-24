@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Smidgen Custom Colors */
+  --color-ink: #3f4e55;
+  --color-ink-muted: #5c6b72;
+  --color-ink-soft: #7a8790;
+  --color-parchment: #f0e6d4;
+  --color-parchment-muted: #d8cfb8;
+  --color-warm-mid: #e8e2d8;
+  --color-gold: #8a6f30;
+  --color-gold-accent: #b8923e;
+  --color-gold-light: #e8d0a0;
+  --color-moss: #3e5644;
+  --color-moss-light: #d4e3be;
+  --color-rust: #6e2636;
+  --color-cream-card: #faf7f2;
+  --color-border-custom: #9e8e78;
+  --color-border-soft: #c8bba8;
+
+  --font-cormorant: "Cormorant Garamond", serif;
+  --font-jost: "Jost", sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: #f0e6d4; /* parchment */
+    --foreground: #3f4e55; /* ink */
+    --card: #faf7f2; /* cream-card */
+    --card-foreground: #3f4e55;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: #3f4e55; /* ink */
+    --primary-foreground: #f0e6d4; /* parchment */
+    --secondary: #e8e2d8; /* warm-mid */
+    --secondary-foreground: #3f4e55;
+    --muted: #e8e2d8;
+    --muted-foreground: #5c6b72; /* ink-muted */
+    --accent: #e8e2d8;
+    --accent-foreground: #3f4e55;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: #9e8e78; /* border-custom */
+    --input: #9e8e78;
+    --ring: #8a6f30; /* gold */
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 210 20% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-jost);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, .font-serif {
+    font-family: var(--font-cormorant);
+  }
+}
+
+@layer components {
+  .hero-label {
+    @apply text-[0.875rem] font-medium tracking-[0.18em] uppercase text-gold-light mb-[1.125rem];
+  }
+
+  .section-subtitle {
+    @apply text-[0.875rem] font-medium text-ink-muted tracking-[0.15em] uppercase mb-[2.25rem];
+  }
+
+  .ornament::before {
+    content: "— ✦ —";
+  }
+}

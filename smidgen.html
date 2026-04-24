@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Charlotte Mason Home Education Series — Preorder</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Colors — contrast-corrected, no opacity needed for text */
+    --ink: #3F4E55;
+    --ink-muted: #5C6B72;
+    --ink-soft: #7A8790;
+    --parchment: #F0E6D4;
+    --parchment-muted: #D8CFB8;
+    --warm-mid: #E8E2D8;
+    --gold: #8A6F30;
+    --gold-accent: #B8923E;
+    --gold-light: #E8D0A0;
+    --moss: #3E5644;
+    --moss-light: #D4E3BE;
+    --rust: #6E2636;
+    --cream-card: #FAF7F2;
+    --border: #9E8E78;
+    --border-soft: #C8BBA8;
+
+    /* Type scale — 16px base */
+    --text-xs: 0.875rem;    /* 14px */
+    --text-sm: 0.9375rem;   /* 15px */
+    --text-base: 1rem;      /* 16px */
+    --text-md: 1.125rem;    /* 18px */
+    --text-lg: 1.25rem;     /* 20px */
+    --text-xl: 1.5rem;      /* 24px */
+    --text-2xl: 1.875rem;   /* 30px */
+
+    /* Line heights */
+    --lh-tight: 1.15;
+    --lh-snug: 1.4;
+    --lh-normal: 1.6;
+    --lh-relaxed: 1.7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 100%; }
+
+  body {
+    background-color: var(--parchment);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: var(--text-base);
+    line-height: var(--lh-relaxed);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* HERO */
+  .hero {
+    background-color: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 4.5rem 1.5rem 3.75rem;
+  }
+
+  .hero-label {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1.125rem;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 400;
+    line-height: var(--lh-tight);
+    letter-spacing: 0.01em;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-sub {
+    font-size: var(--text-md);
+    max-width: 34rem;
+    margin: 0 auto 2rem;
+    line-height: var(--lh-normal);
+    color: var(--parchment);
+  }
+
+  .btn-ghost {
+    display: inline-block;
+    border: 1.5px solid var(--gold-light);
+    color: var(--parchment);
+    padding: 0.75rem 1.75rem;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .btn-ghost:hover {
+    background: var(--gold-light);
+    color: var(--ink);
+  }
+
+  /* DEADLINE BANNER */
+  .deadline-banner {
+    background: var(--moss);
+    color: #fff;
+    text-align: center;
+    padding: 1rem 1.5rem;
+    font-size: var(--text-sm);
+    line-height: var(--lh-normal);
+  }
+  .deadline-banner strong {
+    font-weight: 600;
+    color: var(--moss-light);
+  }
+
+  /* SECTION */
+  section {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 3.75rem 1.5rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    line-height: var(--lh-tight);
+    margin-bottom: 0.375rem;
+    letter-spacing: 0.01em;
+  }
+
+  .section-subtitle {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--ink-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2.25rem;
+  }
+
+  hr.ornament {
+    border: none;
+    text-align: center;
+    margin: 0 0 2.25rem;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+  }
+  hr.ornament::before { content: '— ✦ —'; }
+
+  /* FORMAT TABS */
+  .format-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    max-width: 34rem;
+  }
+  .format-tab {
+    padding: 0.875rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    font-family: 'Jost', sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--cream-card);
+    border: none;
+    border-right: 1px solid var(--border);
+    transition: all 0.2s;
+    color: var(--ink-muted);
+    line-height: var(--lh-snug);
+  }
+  .format-tab:last-child { border-right: none; }
+  .format-tab.active {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+  .format-tab:hover:not(.active) {
+    color: var(--ink);
+    background: var(--warm-mid);
+  }
+  .format-tab small {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    margin-top: 3px;
+    color: inherit;
+    text-transform: none;
+  }
+
+  /* FORMAT PANEL */
+  .format-panel { display: none; }
+  .format-panel.active { display: block; }
+
+  /* BOOK ROWS */
+  .book-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .book-row:first-child { border-top: 1px solid var(--border-soft); }
+
+  .book-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: var(--text-lg);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+    margin-bottom: 0.25rem;
+  }
+  .book-info .vol-label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.375rem;
+  }
+  .book-info .note {
+    font-size: var(--text-xs);
+    color: var(--ink-muted);
+    font-style: italic;
+    line-height: var(--lh-snug);
+  }
+
+  .book-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: var(--text-xl);
+    text-align: right;
+    white-space: nowrap;
+    color: var(--moss);
+    font-weight: 600;
+  }
+
+  /* QUANTITY CONTROL */
+  .qty-control {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .qty-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--warm-mid);
+    border: none;
+    cursor: pointer;
+    font-size: var(--text-md);
+    font-weight: 500;
+    color: var(--ink);
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qty-btn:hover { background: var(--border-soft); }
+  .qty-value {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    height: 2.5rem;
+    padding: 0 0.5rem;
+    font-size: var(--text-base);
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    color: var(--ink);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    background: #fff;
+    user-select: none;
+  }
+
+  /* EBOOK PANEL */
+  .ebook-deal {
+    background: var(--cream-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 3px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .ebook-deal h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: var(--text-lg);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .ebook-deal p {
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+    margin-bottom: 1rem;
+    line-height: var(--lh-normal);
+  }
+  .ebook-options {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .ebook-option {
+    flex: 1;
+    min-width: 9rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1rem;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .ebook-option:hover { border-color: var(--gold); }
+  .ebook-option input {
+    margin-right: 0.5rem;
+    accent-color: var(--moss);
+  }
+  .ebook-option .ebook-title {
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+  .ebook-option .ebook-price {
+    font-size: var(--text-xl);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--moss);
+    font-weight: 600;
+    margin-top: 0.25rem;
+  }
+
+  .free-note {
+    font-size: var(--text-xs);
+    font-style: italic;
+    color: var(--moss);
+    margin-top: 0.875rem;
+    font-weight: 500;
+  }
+
+  /* ADD TO CART */
+  .cart-section {
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--parchment);
+    border: none;
+    padding: 1rem 2.5rem;
+    font-family: 'Jost', sans-serif;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-radius: 2px;
+  }
+  .btn-primary:hover { background: var(--moss); }
+  .cart-note {
+    font-size: var(--text-xs);
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+
+  /* PERKS */
+  .perks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .perk {
+    background: var(--cream-card);
+    border: 1px solid var(--border-soft);
+    padding: 1.5rem 1.25rem;
+    border-radius: 2px;
+  }
+  .perk-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.625rem;
+    color: var(--gold);
+  }
+  .perk h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: var(--text-md);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+    margin-bottom: 0.5rem;
+  }
+  .perk p {
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+    line-height: var(--lh-normal);
+  }
+  .perk .deadline-tag {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--rust);
+    color: #fff;
+    padding: 0.25rem 0.625rem;
+    border-radius: 2px;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .timeline-item {
+    flex: 1;
+    min-width: 11rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+  .timeline-dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--parchment);
+    margin-bottom: 0.75rem;
+    position: relative;
+    z-index: 1;
+  }
+  .timeline-item.complete .timeline-dot {
+    background: var(--moss);
+    border-color: var(--moss);
+  }
+  .timeline-item.current .timeline-dot {
+    background: var(--gold-accent);
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 0 4px rgba(138, 111, 48, 0.2);
+  }
+  .timeline-connector {
+    flex: 0 0 2.5rem;
+    height: 2px;
+    background: var(--border);
+    margin-top: 0.4375rem;
+    align-self: flex-start;
+  }
+  .timeline-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: var(--text-xl);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+  .timeline-item.future .timeline-year { color: var(--ink-muted); }
+  .timeline-vols {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.375rem;
+  }
+  .timeline-item.future .timeline-vols { color: var(--ink-muted); }
+  .timeline-titles {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: var(--text-base);
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 0.625rem;
+    line-height: var(--lh-snug);
+  }
+  .timeline-item.future .timeline-titles { color: var(--ink-muted); }
+  .timeline-status {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3125rem 0.75rem;
+    border-radius: 2px;
+  }
+  .status-complete { background: var(--moss); color: #fff; }
+  .status-current { background: var(--gold); color: #fff; }
+  .status-future {
+    background: var(--warm-mid);
+    color: var(--ink-muted);
+  }
+
+  /* PREVIEW SECTION */
+  .preview-section {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+  .preview-section .section-title { color: var(--parchment); }
+  .preview-section .section-subtitle { color: var(--gold-light); }
+
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .preview-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.22);
+    padding: 1.25rem;
+    border-radius: 2px;
+    text-align: center;
+  }
+  .preview-card .vol {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.625rem;
+  }
+  .preview-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: var(--text-md);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    line-height: var(--lh-snug);
+    color: var(--parchment);
+  }
+  .btn-look-inside {
+    display: inline-block;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--gold-light);
+    color: var(--parchment);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    transition: all 0.2s;
+    border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+  }
+  .btn-look-inside:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: var(--parchment);
+  }
+
+  /* VOLS 4&5 */
+  .vols-note {
+    background: var(--warm-mid);
+    border-left: 3px solid var(--gold-accent);
+    padding: 1.25rem 1.5rem;
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    border-radius: 2px;
+  }
+  .vols-note p {
+    font-size: var(--text-sm);
+    line-height: var(--lh-normal);
+  }
+  .vols-note a {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--moss);
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+  .vols-note a:hover { color: var(--ink); }
+
+  /* STORE NOTE */
+  .store-note {
+    background: var(--cream-card);
+    border: 1px solid var(--border-soft);
+    padding: 1.125rem 1.5rem;
+    border-radius: 2px;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: var(--text-sm);
+    line-height: var(--lh-normal);
+  }
+  .store-note strong { font-weight: 600; }
+  .store-note a {
+    color: var(--moss);
+    font-weight: 500;
+    text-decoration: underline;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--gold-light);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    line-height: var(--lh-normal);
+  }
+  footer a {
+    color: var(--parchment);
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  /* FOCUS STYLES */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--gold-accent);
+    outline-offset: 2px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 40rem) {
+    .format-tabs {
+      grid-template-columns: 1fr 1fr;
+      max-width: 100%;
+    }
+    .format-tab {
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .format-tab:nth-child(2) { border-right: none; }
+    .format-tab:nth-child(3) { border-bottom: none; }
+    .format-tab:nth-child(4) { border-right: none; border-bottom: none; }
+
+    .timeline {
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .timeline-connector {
+      width: 2px;
+      height: 1.5rem;
+      flex: 0 0 1.5rem;
+      align-self: center;
+    }
+
+    .book-row {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "info info"
+        "price qty";
+      gap: 0.75rem 1rem;
+    }
+    .book-info { grid-area: info; }
+    .book-price { grid-area: price; text-align: left; align-self: center; }
+    .qty-control { grid-area: qty; justify-self: end; }
+
+    section { padding: 3rem 1.25rem; }
+  }
+
+  @media (max-width: 30rem) {
+    .hero { padding: 3.5rem 1.25rem 3rem; }
+    .cart-section {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .btn-primary { width: 100%; }
+    .qty-btn { width: 2.75rem; height: 2.75rem; }
+    .qty-value { min-width: 3rem; height: 2.75rem; }
+    .vols-note {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Smidgen Press · Summer 2026 Print Run</div>
+  <h1>The Charlotte Mason<br><em>Home Education Series</em></h1>
+  <p class="hero-sub">A faithful restoration of Charlotte Mason's complete writings — bound to last generations. Preorder your copies and become part of the story.</p>
+  <a href="#" class="btn-ghost">About this campaign &amp; our timeline →</a>
+</div>
+
+<!-- DEADLINE BANNER -->
+<div class="deadline-banner">
+  <span aria-hidden="true">✦</span> &nbsp;Every preorder receives a handwritten thank-you &amp; website acknowledgment &nbsp;·&nbsp; Order by <strong>May 31</strong> to also be printed in the books &nbsp;<span aria-hidden="true">✦</span>
+</div>
+
+<!-- TIMELINE -->
+<section style="max-width:100%; padding: 3.25rem 1.5rem; background: var(--cream-card); border-bottom: 1px solid var(--border-soft);">
+  <div style="max-width: 60rem; margin: 0 auto;">
+    <div class="section-subtitle" style="margin-bottom:0.5rem;">The complete works of Charlotte Mason</div>
+    <h2 class="section-title" style="margin-bottom: 2rem;">A Six-Volume Journey</h2>
+    <div class="timeline">
+      <div class="timeline-item complete">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025</div>
+        <div class="timeline-content">
+          <div class="timeline-vols">Volumes 1 &amp; 6</div>
+          <div class="timeline-titles"><em>Home Education</em> &amp; <em>Philosophy of Education</em></div>
+          <div class="timeline-status status-complete">Launched ✓</div>
+        </div>
+      </div>
+      <div class="timeline-connector"></div>
+      <div class="timeline-item current">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2026</div>
+        <div class="timeline-content">
+          <div class="timeline-vols">Volumes 2 &amp; 3</div>
+          <div class="timeline-titles"><em>Parents and Children</em> &amp; <em>School Education</em></div>
+          <div class="timeline-status status-current">Preorder Open Now</div>
+        </div>
+      </div>
+      <div class="timeline-connector"></div>
+      <div class="timeline-item future">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2027</div>
+        <div class="timeline-content">
+          <div class="timeline-vols">Volumes 4 &amp; 5</div>
+          <div class="timeline-titles"><em>Ourselves</em> &amp; <em>Formation of Character</em></div>
+          <div class="timeline-status status-future">Coming 2027</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREORDER SECTION -->
+<section>
+  <div class="section-subtitle">Summer 2026 · All volumes ship together</div>
+  <h2 class="section-title">Choose Your Format</h2>
+  <hr class="ornament">
+
+  <div class="format-tabs">
+    <button class="format-tab active" onclick="switchTab('sewn', this)">Sewn Legacy<br><small>$70 / vol</small></button>
+    <button class="format-tab" onclick="switchTab('glued', this)">Glued Hardcover<br><small>$40 / vol</small></button>
+    <button class="format-tab" onclick="switchTab('pb', this)">Paperback<br><small>$20 / vol</small></button>
+    <button class="format-tab" onclick="switchTab('ebook', this)">Kindle / EPUB<br><small>from $7</small></button>
+  </div>
+
+  <!-- SEWN -->
+  <div class="format-panel active" id="panel-sewn">
+    <div class="store-note" style="border-left: 3px solid var(--rust); background: #fdf6f5;">
+      <strong style="color: var(--rust);">Limited to this print run.</strong> Sewn legacy bindings are only available through this summer 2026 bulk order. Glued hardcover and paperback editions will remain available in our store ongoing.
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 1</div>
+        <h3>Home Education</h3>
+        <div class="note">Sewn binding · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$70</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 2 · New</div>
+        <h3>Parents and Children</h3>
+        <div class="note">Sewn binding · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$70</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 3 · New</div>
+        <h3>School Education</h3>
+        <div class="note">Sewn binding · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$70</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 6</div>
+        <h3>Philosophy of Education</h3>
+        <div class="note">Sewn binding · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$70</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="cart-section">
+      <button class="btn-primary">Add to Cart</button>
+      <span class="cart-note">Charged now · Ships summer 2026 · Ebook included free</span>
+    </div>
+  </div>
+
+  <!-- GLUED HB -->
+  <div class="format-panel" id="panel-glued">
+    <div class="store-note">
+      <strong>Want Volumes 1 &amp; 6 sooner?</strong> Glued hardcover editions are <a href="#">available now in our store</a> and ship within a week. The preorder below is for the summer 2026 print run — ideal if you'd like all four volumes to arrive together.
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 1</div>
+        <h3>Home Education</h3>
+        <div class="note">Glued hardcover · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$40</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 2 · New</div>
+        <h3>Parents and Children</h3>
+        <div class="note">Glued hardcover · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$40</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 3 · New</div>
+        <h3>School Education</h3>
+        <div class="note">Glued hardcover · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$40</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 6</div>
+        <h3>Philosophy of Education</h3>
+        <div class="note">Glued hardcover · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$40</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="cart-section">
+      <button class="btn-primary">Add to Cart</button>
+      <span class="cart-note">Charged now · Ships summer 2026 · Ebook included free</span>
+    </div>
+  </div>
+
+  <!-- PAPERBACK -->
+  <div class="format-panel" id="panel-pb">
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 1</div>
+        <h3>Home Education</h3>
+        <div class="note">Paperback · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$20</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 2 · New</div>
+        <h3>Parents and Children</h3>
+        <div class="note">Paperback · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$20</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 3 · New</div>
+        <h3>School Education</h3>
+        <div class="note">Paperback · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$20</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="book-info">
+        <div class="vol-label">Volume 6</div>
+        <h3>Philosophy of Education</h3>
+        <div class="note">Paperback · Ships summer 2026</div>
+      </div>
+      <div class="book-price">$20</div>
+      <div class="qty-control">
+        <button class="qty-btn" aria-label="Decrease quantity" onclick="changeQty(this,-1)">−</button>
+        <span class="qty-value" aria-live="polite">0</span>
+        <button class="qty-btn" aria-label="Increase quantity" onclick="changeQty(this,1)">+</button>
+      </div>
+    </div>
+    <div class="cart-section">
+      <button class="btn-primary">Add to Cart</button>
+      <span class="cart-note">Charged now · Ships summer 2026 · Ebook included free</span>
+    </div>
+  </div>
+
+  <!-- EBOOK -->
+  <div class="format-panel" id="panel-ebook">
+    <div class="ebook-deal">
+      <h4>Kindle &amp; EPUB — New Volumes</h4>
+      <p>Volumes 2 &amp; 3 are available as Kindle/EPUB. Choose one or both.</p>
+      <div class="ebook-options">
+        <label class="ebook-option">
+          <div><input type="radio" name="ebook" value="v2"> <span class="ebook-title">Vol. 2 — Parents and Children</span></div>
+          <div class="ebook-price">$7</div>
+        </label>
+        <label class="ebook-option">
+          <div><input type="radio" name="ebook" value="v3"> <span class="ebook-title">Vol. 3 — School Education</span></div>
+          <div class="ebook-price">$7</div>
+        </label>
+        <label class="ebook-option">
+          <div><input type="radio" name="ebook" value="both"> <span class="ebook-title">Both new volumes</span></div>
+          <div class="ebook-price">$13</div>
+        </label>
+      </div>
+      <p class="free-note">✓ Ebooks are included free with any print order — no need to add them separately.</p>
+    </div>
+    <div class="cart-section">
+      <button class="btn-primary">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- VOLS 4&5 NOTE -->
+  <div class="vols-note">
+    <p>📖 <strong>Looking for Volumes 4 &amp; 5?</strong> They're coming — we're working on them now and anticipate a 2027 release.</p>
+    <a href="#">Read our update →</a>
+  </div>
+</section>
+
+<!-- PERKS -->
+<section style="background: var(--warm-mid); max-width:100%; padding: 3.75rem 1.5rem;">
+  <div style="max-width:60rem; margin:0 auto;">
+    <div class="section-subtitle">Every preorder includes</div>
+    <h2 class="section-title">Why Order Now</h2>
+    <hr class="ornament">
+    <div class="perks-grid">
+      <div class="perk">
+        <div class="perk-icon" aria-hidden="true">✦</div>
+        <h4>Sewn Legacy Binding — This Run Only</h4>
+        <p>Sewn signatures are available exclusively in this summer 2026 bulk print run. Glued hardcover and paperback will remain available ongoing — but if you want the sewn binding, this is your window.</p>
+      </div>
+      <div class="perk">
+        <div class="perk-icon" aria-hidden="true">✉</div>
+        <h4>Handwritten Thank-You</h4>
+        <p>Every preorder — any format — receives a personal handwritten note and a few little extras as a thank-you for making this project possible.</p>
+      </div>
+      <div class="perk">
+        <div class="perk-icon" aria-hidden="true">🌿</div>
+        <h4>Acknowledged on Our Website</h4>
+        <p>All preorder supporters will be listed by name on our website as founding patrons of this series.</p>
+      </div>
+      <div class="perk">
+        <div class="perk-icon" aria-hidden="true">📖</div>
+        <h4>Printed in the Books</h4>
+        <p>Order by May 31 and your name will also appear in the printed acknowledgments inside each volume — a permanent part of this edition.</p>
+        <span class="deadline-tag">Order by May 31</span>
+      </div>
+      <div class="perk">
+        <div class="perk-icon" aria-hidden="true">📱</div>
+        <h4>Free ebook with print purchase</h4>
+        <p>Every print order includes Kindle/EPUB access to the new volumes at no extra charge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOOK INSIDE -->
+<section class="preview-section" style="max-width:100%; padding: 3.75rem 1.5rem;">
+  <div style="max-width:60rem; margin:0 auto;">
+    <div class="section-subtitle">Sample pages &amp; interior</div>
+    <h2 class="section-title">Look Inside</h2>
+    <hr class="ornament">
+    <div class="preview-grid">
+      <div class="preview-card">
+        <div class="vol">Volume 1</div>
+        <h4>Home Education</h4>
+        <button class="btn-look-inside">Preview →</button>
+      </div>
+      <div class="preview-card">
+        <div class="vol">Volume 2 · New</div>
+        <h4>Parents and Children</h4>
+        <button class="btn-look-inside">Preview →</button>
+      </div>
+      <div class="preview-card">
+        <div class="vol">Volume 3 · New</div>
+        <h4>School Education</h4>
+        <button class="btn-look-inside">Preview →</button>
+      </div>
+      <div class="preview-card">
+        <div class="vol">Volume 6</div>
+        <h4>Philosophy of Education</h4>
+        <button class="btn-look-inside">Preview →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Smidgen Press · All preorders ship summer 2026 · Questions? <a href="#">Contact us</a>
+</footer>
+
+<script>
+  function switchTab(id, el) {
+    document.querySelectorAll('.format-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.format-panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+
+  function changeQty(btn, delta) {
+    const valEl = btn.parentElement.querySelector('.qty-value');
+    let val = parseInt(valEl.textContent) || 0;
+    val = Math.max(0, val + delta);
+    valEl.textContent = val;
+  }
+</script>
+</body>
+</html>
