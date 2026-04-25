@@ -1,3 +1,8 @@
+export interface ShopifyAttribute {
+  key: string;
+  value: string;
+}
+
 export interface MoneyV2 {
   amount: string;
   currencyCode: string;
@@ -29,6 +34,9 @@ export interface Product {
   variants: {
     nodes: ProductVariant[];
   };
+  vol_number?: {
+    value: string;
+  };
 }
 
 export interface CartLine {
@@ -40,6 +48,7 @@ export interface CartLine {
   cost: {
     totalAmount: MoneyV2;
   };
+  attributes?: ShopifyAttribute[];
 }
 
 export interface Cart {
