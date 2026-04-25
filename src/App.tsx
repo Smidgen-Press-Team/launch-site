@@ -1,107 +1,169 @@
-import { useState } from 'react'
+import { BookRow } from "@/components/BookRow"
+import { Timeline } from "@/components/Timeline"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Timeline } from "@/components/Timeline"
-import { BookRow } from "@/components/BookRow"
+import { type Product, type CartLine } from '@/types/shopify'
 import { useCart } from '@shopify/hydrogen-react'
+import { useState } from 'react'
 
-const BOOKS = [
-  { 
-    id: 'v1', 
-    vol: 'Volume 1', 
+const PRODUCTS: Product[] = [
+  {
+    id: 'gid://shopify/Product/1',
+    handle: 'Volume-1',
     title: 'Home Education',
+    images: { nodes: [] },
     variants: {
-      sewn: 'gid://shopify/ProductVariant/1234567890123',
-      glued: 'gid://shopify/ProductVariant/1234567890124',
-      pb: 'gid://shopify/ProductVariant/1234567890125'
+      nodes: [
+        { id: 'gid://shopify/ProductVariant/1234567890123', title: 'Sewn', price: { amount: '70.00', currencyCode: 'USD' }, availableForSale: true },
+        { id: 'gid://shopify/ProductVariant/1234567890124', title: 'Hardcover', price: { amount: '40.00', currencyCode: 'USD' }, availableForSale: true },
+        { id: 'gid://shopify/ProductVariant/1234567890125', title: 'Paperback', price: { amount: '20.00', currencyCode: 'USD' }, availableForSale: true }
+      ]
     }
   },
-  { 
-    id: 'v2', 
-    vol: 'Volume 2 · New', 
+  {
+    id: 'gid://shopify/Product/2',
+    handle: 'Volume-2',
     title: 'Parents and Children',
+    images: { nodes: [] },
     variants: {
-      sewn: 'gid://shopify/ProductVariant/1234567890126',
-      glued: 'gid://shopify/ProductVariant/1234567890127',
-      pb: 'gid://shopify/ProductVariant/1234567890128'
+      nodes: [
+        { id: 'gid://shopify/ProductVariant/1234567890126', title: 'Sewn', price: { amount: '70.00', currencyCode: 'USD' }, availableForSale: true },
+        { id: 'gid://shopify/ProductVariant/1234567890127', title: 'Hardcover', price: { amount: '40.00', currencyCode: 'USD' }, availableForSale: true },
+        { id: 'gid://shopify/ProductVariant/1234567890128', title: 'Paperback', price: { amount: '20.00', currencyCode: 'USD' }, availableForSale: true },
+        { id: 'gid://shopify/ProductVariant/1234567890135', title: 'Kindle/EPUB', price: { amount: '7.00', currencyCode: 'USD' }, availableForSale: true }
+      ]
     }
   },
-  { 
-    id: 'v3', 
-    vol: 'Volume 3 · New', 
+  {
+    id: 'gid://shopify/Product/3',
+    handle: 'Volume-3',
     title: 'School Education',
+    images: { nodes: [] },
     variants: {
-      sewn: 'gid://shopify/ProductVariant/1234567890129',
-      glued: 'gid://shopify/ProductVariant/1234567890130',
-      pb: 'gid://shopify/ProductVariant/1234567890131'
+      nodes: [
+        { id: 'gid://shopify/ProductVariant/1234567890129', title: 'Sewn', price: { amount: '70.00', currencyCode: 'USD' }, availableForSale: true },
+        { id: 'gid://shopify/ProductVariant/1234567890130', title: 'Hardcover', price: { amount: '40.00', currencyCode: 'USD' }, availableForSale: true },
+        { id: 'gid://shopify/ProductVariant/1234567890131', title: 'Paperback', price: { amount: '20.00', currencyCode: 'USD' }, availableForSale: true },
+        { id: 'gid://shopify/ProductVariant/1234567890136', title: 'Kindle/EPUB', price: { amount: '7.00', currencyCode: 'USD' }, availableForSale: true }
+      ]
     }
   },
-  { 
-    id: 'v6', 
-    vol: 'Volume 6', 
+  {
+    id: 'gid://shopify/Product/6',
+    handle: 'Volume-6',
     title: 'Philosophy of Education',
+    images: { nodes: [] },
     variants: {
-      sewn: 'gid://shopify/ProductVariant/1234567890132',
-      glued: 'gid://shopify/ProductVariant/1234567890133',
-      pb: 'gid://shopify/ProductVariant/1234567890134'
+      nodes: [
+        { id: 'gid://shopify/ProductVariant/1234567890132', title: 'Sewn', price: { amount: '70.00', currencyCode: 'USD' }, availableForSale: true },
+        { id: 'gid://shopify/ProductVariant/1234567890133', title: 'Hardcover', price: { amount: '40.00', currencyCode: 'USD' }, availableForSale: true },
+        { id: 'gid://shopify/ProductVariant/1234567890134', title: 'Paperback', price: { amount: '20.00', currencyCode: 'USD' }, availableForSale: true }
+      ]
     }
   },
 ]
 
-const EBOOK_VARIANTS = {
-  v2: 'gid://shopify/ProductVariant/1234567890135',
-  v3: 'gid://shopify/ProductVariant/1234567890136',
-  both: 'gid://shopify/ProductVariant/1234567890137'
-}
+const EBOOK_BUNDLE_VARIANT_ID = 'gid://shopify/ProductVariant/1234567890137'
 
 export default function App() {
   const [quantities, setQuantities] = useState<Record<string, number>>({})
-  const { linesAdd, checkoutUrl, status } = useCart()
+  const { linesAdd, checkoutUrl, status, lines, totalQuantity } = useCart()
   const [selectedEbook, setSelectedEbook] = useState<string>('')
+  const [isCartOpen, setIsCartOpen] = useState(false)
 
   const handleQtyChange = (id: string, qty: number) => {
     setQuantities(prev => ({ ...prev, [id]: qty }))
   }
 
-  const addToCart = (format: 'sewn' | 'glued' | 'pb' | 'ebook') => {
-    const lines: Array<{ merchandiseId: string; quantity: number }> = []
+  const addToCart = (format: string) => {
+    const linesToUpdate: Array<{ merchandiseId: string; quantity: number }> = []
 
-    if (format === 'ebook') {
-      if (selectedEbook) {
-        lines.push({ merchandiseId: EBOOK_VARIANTS[selectedEbook as keyof typeof EBOOK_VARIANTS], quantity: 1 })
+    if (format === 'Kindle/EPUB') {
+      if (selectedEbook === 'both') {
+        linesToUpdate.push({ merchandiseId: EBOOK_BUNDLE_VARIANT_ID, quantity: 1 })
+      } else if (selectedEbook) {
+        const product = PRODUCTS.find(p => p.handle === selectedEbook)
+        const variant = product?.variants.nodes.find(v => v.title === 'Kindle/EPUB')
+        if (variant) {
+          linesToUpdate.push({ merchandiseId: variant.id, quantity: 1 })
+        }
       }
     } else {
-      BOOKS.forEach(book => {
-        const qty = quantities[`${format}-${book.id}`] || 0
-        if (qty > 0) {
-          lines.push({
-            merchandiseId: book.variants[format],
+      PRODUCTS.forEach(product => {
+        const qty = quantities[`${format}-${product.id}`] || 0
+        const variant = product.variants.nodes.find(v => v.title === format)
+        if (qty > 0 && variant) {
+          linesToUpdate.push({
+            merchandiseId: variant.id,
             quantity: qty
           })
         }
       })
     }
 
-    if (lines.length > 0) {
-      linesAdd(lines)
+    if (linesToUpdate.length > 0) {
+      linesAdd(linesToUpdate)
+      setIsCartOpen(true)
     }
   }
 
   return (
     <div className="min-h-screen">
+      {/* CART DRAWER */}
+      {isCartOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setIsCartOpen(false)} />
+          <div className="relative w-full max-w-md bg-parchment h-full shadow-2xl flex flex-col">
+            <div className="p-6 border-b border-border-soft flex justify-between items-center">
+              <h2 className="font-serif text-2xl font-medium">Your Cart</h2>
+              <button onClick={() => setIsCartOpen(false)} className="text-2xl">&times;</button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              {lines && lines.length > 0 ? (
+                (lines as unknown as CartLine[]).map((line) => (
+                  <div key={line.id} className="flex gap-4 items-start">
+                    <div className="flex-1">
+                      <h4 className="font-serif font-medium">{line.merchandise.product.title}</h4>
+                      <p className="text-sm text-ink-muted">{line.merchandise.title}</p>
+                      <div className="flex justify-between items-center mt-2">
+                        <span className="text-sm">Qty: {line.quantity}</span>
+                        <span className="font-serif font-semibold">${parseFloat(line.cost.totalAmount.amount).toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-center text-ink-muted py-12 italic text-lg">Your cart is currently empty.</p>
+              )}
+            </div>
+            <div className="p-6 border-t border-border-soft space-y-4 bg-cream-card">
+              <div className="flex justify-between text-lg font-serif font-semibold">
+                <span>Subtotal</span>
+                <span>{lines && lines.length > 0 ? `$${(lines as unknown as CartLine[]).reduce((acc: number, line) => acc + parseFloat(line.cost.totalAmount.amount), 0).toFixed(2)}` : '$0.00'}</span>
+              </div>
+              <Button
+                disabled={!checkoutUrl || status !== 'idle'}
+                onClick={() => checkoutUrl && (window.location.href = checkoutUrl)}
+                className="w-full bg-ink hover:bg-moss text-parchment rounded-[2px] py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+              >
+                {status !== 'idle' ? 'Loading...' : 'Proceed to Checkout'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* HERO */}
       <header className="bg-ink text-parchment text-center px-6 py-18 md:py-24">
         <div className="hero-label">Smidgen Press · Summer 2026 Print Run</div>
         <div className="flex justify-center mb-4">
-          {checkoutUrl && (
-            <Button 
-              variant="outline" 
-              onClick={() => window.location.href = checkoutUrl}
-              className="border-gold-light text-parchment hover:bg-gold-light hover:text-ink rounded-[2px] tracking-[0.15em] uppercase text-xs px-4 py-2 h-auto"
-            >
-              Checkout ({status !== 'idle' ? '...' : 'View Cart'})
-            </Button>
-          )}
+          <Button
+            variant="outline"
+            onClick={() => setIsCartOpen(true)}
+            className="border-gold-light text-parchment hover:bg-gold-light hover:text-ink rounded-[2px] tracking-[0.15em] uppercase text-xs px-4 py-2 h-auto"
+          >
+            Cart ({totalQuantity || 0})
+          </Button>
         </div>
         <h1 className="text-4xl md:text-6xl font-normal leading-tight mb-5 max-w-4xl mx-auto">
           The Charlotte Mason<br />
@@ -135,52 +197,51 @@ export default function App() {
         <h2 className="font-serif text-[1.875rem] font-medium leading-tight mb-2">Choose Your Format</h2>
         <div className="ornament text-gold text-center text-xl mb-9"></div>
 
-        <Tabs defaultValue="sewn" className="w-full">
+        <Tabs defaultValue="Sewn" className="w-full">
           <TabsList className="grid grid-cols-2 md:grid-cols-4 h-auto p-0 bg-transparent border border-border-custom rounded-[3px] overflow-visible max-w-[34rem] mb-8">
-            <TabsTrigger 
-              value="sewn" 
+            <TabsTrigger
+              value="Sewn"
               className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
             >
               Sewn Legacy <span className="text-[10px] lowercase normal-case opacity-80">$70 / vol</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="glued" 
+            <TabsTrigger
+              value="Hardcover"
               className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
             >
               Hardcover <span className="text-[10px] lowercase normal-case opacity-80">$40 / vol</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="pb" 
+            <TabsTrigger
+              value="Paperback"
               className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
             >
               Paperback <span className="text-[10px] lowercase normal-case opacity-80">$20 / vol</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="ebook" 
+            <TabsTrigger
+              value="Kindle/EPUB"
               className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
             >
               Kindle/EPUB <span className="text-[10px] lowercase normal-case opacity-80">from $7</span>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="sewn" className="space-y-0 mt-0">
+          <TabsContent value="Sewn" className="space-y-0 mt-0">
             <div className="bg-[#fdf6f5] border-l-3 border-rust p-5 mb-6 rounded-[2px]">
               <strong className="text-rust font-semibold">Limited to this print run.</strong> Sewn legacy bindings are only available through this summer 2026 bulk order.
             </div>
-            {BOOKS.map(book => (
-              <BookRow 
-                key={book.id}
-                vol={book.vol}
-                title={book.title}
+            {PRODUCTS.map(product => (
+              <BookRow
+                key={product.id}
+                product={product}
+                variant={product.variants.nodes.find(v => v.title === 'Sewn')}
                 note="Sewn binding · Ships summer 2026"
-                price={70}
-                quantity={quantities[`sewn-${book.id}`] || 0}
-                onQuantityChange={(qty) => handleQtyChange(`sewn-${book.id}`, qty)}
+                quantity={quantities[`Sewn-${product.id}`] || 0}
+                onQuantityChange={(qty) => handleQtyChange(`Sewn-${product.id}`, qty)}
               />
             ))}
             <div className="mt-10 flex flex-wrap items-center gap-5">
-              <Button 
-                onClick={() => addToCart('sewn')}
+              <Button
+                onClick={() => addToCart('Sewn')}
                 className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
               >
                 Add to Cart
@@ -188,25 +249,24 @@ export default function App() {
               <span className="text-xs italic text-ink-muted">Charged now · Ships summer 2026 · Ebook included free</span>
             </div>
           </TabsContent>
-          
-          <TabsContent value="glued" className="space-y-0 mt-0">
+
+          <TabsContent value="Hardcover" className="space-y-0 mt-0">
             <div className="bg-cream-card border border-border-soft p-5 mb-6 rounded-[2px] text-sm">
               <strong>Want Volumes 1 & 6 sooner?</strong> Glued hardcover editions are <a href="#" className="text-moss font-medium underline">available now in our store</a>.
             </div>
-            {BOOKS.map(book => (
-              <BookRow 
-                key={book.id}
-                vol={book.vol}
-                title={book.title}
+            {PRODUCTS.map(product => (
+              <BookRow
+                key={product.id}
+                product={product}
+                variant={product.variants.nodes.find(v => v.title === 'Hardcover')}
                 note="Glued hardcover · Ships summer 2026"
-                price={40}
-                quantity={quantities[`glued-${book.id}`] || 0}
-                onQuantityChange={(qty) => handleQtyChange(`glued-${book.id}`, qty)}
+                quantity={quantities[`Hardcover-${product.id}`] || 0}
+                onQuantityChange={(qty) => handleQtyChange(`Hardcover-${product.id}`, qty)}
               />
             ))}
             <div className="mt-10 flex flex-wrap items-center gap-5">
-              <Button 
-                onClick={() => addToCart('glued')}
+              <Button
+                onClick={() => addToCart('Hardcover')}
                 className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
               >
                 Add to Cart
@@ -214,21 +274,20 @@ export default function App() {
             </div>
           </TabsContent>
 
-          <TabsContent value="pb" className="space-y-0 mt-0">
-            {BOOKS.map(book => (
-              <BookRow 
-                key={book.id}
-                vol={book.vol}
-                title={book.title}
+          <TabsContent value="Paperback" className="space-y-0 mt-0">
+            {PRODUCTS.map(product => (
+              <BookRow
+                key={product.id}
+                product={product}
+                variant={product.variants.nodes.find(v => v.title === 'Paperback')}
                 note="Paperback · Ships summer 2026"
-                price={20}
-                quantity={quantities[`pb-${book.id}`] || 0}
-                onQuantityChange={(qty) => handleQtyChange(`pb-${book.id}`, qty)}
+                quantity={quantities[`Paperback-${product.id}`] || 0}
+                onQuantityChange={(qty) => handleQtyChange(`Paperback-${product.id}`, qty)}
               />
             ))}
             <div className="mt-10 flex flex-wrap items-center gap-5">
-              <Button 
-                onClick={() => addToCart('pb')}
+              <Button
+                onClick={() => addToCart('Paperback')}
                 className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
               >
                 Add to Cart
@@ -236,19 +295,19 @@ export default function App() {
             </div>
           </TabsContent>
 
-          <TabsContent value="ebook" className="space-y-0 mt-0">
+          <TabsContent value="Kindle/EPUB" className="space-y-0 mt-0">
             <div className="bg-cream-card border border-border-soft p-6 mb-6 rounded-[2px]">
               <h4 className="font-serif text-lg font-medium mb-2">Kindle & EPUB — New Volumes</h4>
               <p className="text-sm text-ink-muted mb-4">Volumes 2 & 3 are available as Kindle/EPUB. Choose one or both.</p>
               <div className="flex flex-wrap gap-3">
                 <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
                   <div className="flex items-center gap-2 mb-1">
-                    <input 
-                      type="radio" 
-                      name="ebook" 
-                      className="accent-moss" 
-                      checked={selectedEbook === 'v2'} 
-                      onChange={() => setSelectedEbook('v2')} 
+                    <input
+                      type="radio"
+                      name="ebook"
+                      className="accent-moss"
+                      checked={selectedEbook === 'Volume-2'}
+                      onChange={() => setSelectedEbook('Volume-2')}
                     />
                     <span className="text-sm font-medium">Volume 2</span>
                   </div>
@@ -256,12 +315,12 @@ export default function App() {
                 </label>
                 <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
                   <div className="flex items-center gap-2 mb-1">
-                    <input 
-                      type="radio" 
-                      name="ebook" 
-                      className="accent-moss" 
-                      checked={selectedEbook === 'v3'} 
-                      onChange={() => setSelectedEbook('v3')} 
+                    <input
+                      type="radio"
+                      name="ebook"
+                      className="accent-moss"
+                      checked={selectedEbook === 'Volume-3'}
+                      onChange={() => setSelectedEbook('Volume-3')}
                     />
                     <span className="text-sm font-medium">Volume 3</span>
                   </div>
@@ -269,12 +328,12 @@ export default function App() {
                 </label>
                 <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
                   <div className="flex items-center gap-2 mb-1">
-                    <input 
-                      type="radio" 
-                      name="ebook" 
-                      className="accent-moss" 
-                      checked={selectedEbook === 'both'} 
-                      onChange={() => setSelectedEbook('both')} 
+                    <input
+                      type="radio"
+                      name="ebook"
+                      className="accent-moss"
+                      checked={selectedEbook === 'both'}
+                      onChange={() => setSelectedEbook('both')}
                     />
                     <span className="text-sm font-medium">Both new volumes</span>
                   </div>
@@ -284,8 +343,8 @@ export default function App() {
               <p className="text-xs italic text-moss mt-4 font-medium">✓ Ebooks are included free with any print order — no need to add them separately.</p>
             </div>
             <div className="mt-6">
-              <Button 
-                onClick={() => addToCart('ebook')}
+              <Button
+                onClick={() => addToCart('Kindle/EPUB')}
                 className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
               >
                 Add to Cart
@@ -306,22 +365,22 @@ export default function App() {
           <div className="section-subtitle">Every preorder includes</div>
           <h2 className="font-serif text-[1.875rem] font-medium leading-tight mb-2">Why Order Now</h2>
           <div className="ornament text-gold text-center text-xl mb-9"></div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <PerkCard 
-              icon="✦" 
-              title="Sewn Legacy Binding" 
-              description="Sewn signatures are available exclusively in this summer 2026 bulk print run." 
+            <PerkCard
+              icon="✦"
+              title="Sewn Legacy Binding"
+              description="Sewn signatures are available exclusively in this summer 2026 bulk print run."
             />
-            <PerkCard 
-              icon="✉" 
-              title="Handwritten Thank-You" 
-              description="Every preorder receives a personal handwritten note and extras." 
+            <PerkCard
+              icon="✉"
+              title="Handwritten Thank-You"
+              description="Every preorder receives a personal handwritten note and extras."
             />
-            <PerkCard 
-              icon="🌿" 
-              title="Website Acknowledgment" 
-              description="All preorder supporters will be listed by name as founding patrons." 
+            <PerkCard
+              icon="🌿"
+              title="Website Acknowledgment"
+              description="All preorder supporters will be listed by name as founding patrons."
             />
           </div>
         </div>
