@@ -3,19 +3,88 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Timeline } from "@/components/Timeline"
 import { BookRow } from "@/components/BookRow"
+import { useCart } from '@shopify/hydrogen-react'
 
 const BOOKS = [
-  { id: 'v1', vol: 'Volume 1', title: 'Home Education' },
-  { id: 'v2', vol: 'Volume 2 · New', title: 'Parents and Children' },
-  { id: 'v3', vol: 'Volume 3 · New', title: 'School Education' },
-  { id: 'v6', vol: 'Volume 6', title: 'Philosophy of Education' },
+  { 
+    id: 'v1', 
+    vol: 'Volume 1', 
+    title: 'Home Education',
+    variants: {
+      sewn: 'gid://shopify/ProductVariant/1234567890123',
+      glued: 'gid://shopify/ProductVariant/1234567890124',
+      pb: 'gid://shopify/ProductVariant/1234567890125'
+    }
+  },
+  { 
+    id: 'v2', 
+    vol: 'Volume 2 · New', 
+    title: 'Parents and Children',
+    variants: {
+      sewn: 'gid://shopify/ProductVariant/1234567890126',
+      glued: 'gid://shopify/ProductVariant/1234567890127',
+      pb: 'gid://shopify/ProductVariant/1234567890128'
+    }
+  },
+  { 
+    id: 'v3', 
+    vol: 'Volume 3 · New', 
+    title: 'School Education',
+    variants: {
+      sewn: 'gid://shopify/ProductVariant/1234567890129',
+      glued: 'gid://shopify/ProductVariant/1234567890130',
+      pb: 'gid://shopify/ProductVariant/1234567890131'
+    }
+  },
+  { 
+    id: 'v6', 
+    vol: 'Volume 6', 
+    title: 'Philosophy of Education',
+    variants: {
+      sewn: 'gid://shopify/ProductVariant/1234567890132',
+      glued: 'gid://shopify/ProductVariant/1234567890133',
+      pb: 'gid://shopify/ProductVariant/1234567890134'
+    }
+  },
 ]
+
+const EBOOK_VARIANTS = {
+  v2: 'gid://shopify/ProductVariant/1234567890135',
+  v3: 'gid://shopify/ProductVariant/1234567890136',
+  both: 'gid://shopify/ProductVariant/1234567890137'
+}
 
 export default function App() {
   const [quantities, setQuantities] = useState<Record<string, number>>({})
+  const { linesAdd, checkoutUrl, status } = useCart()
+  const [selectedEbook, setSelectedEbook] = useState<string>('')
 
   const handleQtyChange = (id: string, qty: number) => {
     setQuantities(prev => ({ ...prev, [id]: qty }))
+  }
+
+  const addToCart = (format: 'sewn' | 'glued' | 'pb' | 'ebook') => {
+    const lines: Array<{ merchandiseId: string; quantity: number }> = []
+
+    if (format === 'ebook') {
+      if (selectedEbook) {
+        lines.push({ merchandiseId: EBOOK_VARIANTS[selectedEbook as keyof typeof EBOOK_VARIANTS], quantity: 1 })
+      }
+    } else {
+      BOOKS.forEach(book => {
+        const qty = quantities[`${format}-${book.id}`] || 0
+        if (qty > 0) {
+          lines.push({
+            merchandiseId: book.variants[format],
+            quantity: qty
+          })
+        }
+      })
+    }
+
+    if (lines.length > 0) {
+      linesAdd(lines)
+    }
   }
 
   return (
@@ -23,6 +92,17 @@ export default function App() {
       {/* HERO */}
       <header className="bg-ink text-parchment text-center px-6 py-18 md:py-24">
         <div className="hero-label">Smidgen Press · Summer 2026 Print Run</div>
+        <div className="flex justify-center mb-4">
+          {checkoutUrl && (
+            <Button 
+              variant="outline" 
+              onClick={() => window.location.href = checkoutUrl}
+              className="border-gold-light text-parchment hover:bg-gold-light hover:text-ink rounded-[2px] tracking-[0.15em] uppercase text-xs px-4 py-2 h-auto"
+            >
+              Checkout ({status !== 'idle' ? '...' : 'View Cart'})
+            </Button>
+          )}
+        </div>
         <h1 className="text-4xl md:text-6xl font-normal leading-tight mb-5 max-w-4xl mx-auto">
           The Charlotte Mason<br />
           <em className="italic text-gold-light">Home Education Series</em>
@@ -99,7 +179,10 @@ export default function App() {
               />
             ))}
             <div className="mt-10 flex flex-wrap items-center gap-5">
-              <Button className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium">
+              <Button 
+                onClick={() => addToCart('sewn')}
+                className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+              >
                 Add to Cart
               </Button>
               <span className="text-xs italic text-ink-muted">Charged now · Ships summer 2026 · Ebook included free</span>
@@ -122,7 +205,10 @@ export default function App() {
               />
             ))}
             <div className="mt-10 flex flex-wrap items-center gap-5">
-              <Button className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium">
+              <Button 
+                onClick={() => addToCart('glued')}
+                className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+              >
                 Add to Cart
               </Button>
             </div>
@@ -141,7 +227,10 @@ export default function App() {
               />
             ))}
             <div className="mt-10 flex flex-wrap items-center gap-5">
-              <Button className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium">
+              <Button 
+                onClick={() => addToCart('pb')}
+                className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+              >
                 Add to Cart
               </Button>
             </div>
@@ -152,18 +241,41 @@ export default function App() {
               <h4 className="font-serif text-lg font-medium mb-2">Kindle & EPUB — New Volumes</h4>
               <p className="text-sm text-ink-muted mb-4">Volumes 2 & 3 are available as Kindle/EPUB. Choose one or both.</p>
               <div className="flex flex-wrap gap-3">
-                {['Volume 2', 'Volume 3'].map((vol, i) => (
-                  <label key={vol} className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <input type="radio" name="ebook" className="accent-moss" />
-                      <span className="text-sm font-medium">{vol}</span>
-                    </div>
-                    <div className="font-serif text-xl text-moss font-semibold">$7</div>
-                  </label>
-                ))}
                 <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
                   <div className="flex items-center gap-2 mb-1">
-                    <input type="radio" name="ebook" className="accent-moss" />
+                    <input 
+                      type="radio" 
+                      name="ebook" 
+                      className="accent-moss" 
+                      checked={selectedEbook === 'v2'} 
+                      onChange={() => setSelectedEbook('v2')} 
+                    />
+                    <span className="text-sm font-medium">Volume 2</span>
+                  </div>
+                  <div className="font-serif text-xl text-moss font-semibold">$7</div>
+                </label>
+                <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
+                  <div className="flex items-center gap-2 mb-1">
+                    <input 
+                      type="radio" 
+                      name="ebook" 
+                      className="accent-moss" 
+                      checked={selectedEbook === 'v3'} 
+                      onChange={() => setSelectedEbook('v3')} 
+                    />
+                    <span className="text-sm font-medium">Volume 3</span>
+                  </div>
+                  <div className="font-serif text-xl text-moss font-semibold">$7</div>
+                </label>
+                <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
+                  <div className="flex items-center gap-2 mb-1">
+                    <input 
+                      type="radio" 
+                      name="ebook" 
+                      className="accent-moss" 
+                      checked={selectedEbook === 'both'} 
+                      onChange={() => setSelectedEbook('both')} 
+                    />
                     <span className="text-sm font-medium">Both new volumes</span>
                   </div>
                   <div className="font-serif text-xl text-moss font-semibold">$13</div>
@@ -172,7 +284,10 @@ export default function App() {
               <p className="text-xs italic text-moss mt-4 font-medium">✓ Ebooks are included free with any print order — no need to add them separately.</p>
             </div>
             <div className="mt-6">
-              <Button className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium">
+              <Button 
+                onClick={() => addToCart('ebook')}
+                className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+              >
                 Add to Cart
               </Button>
             </div>
