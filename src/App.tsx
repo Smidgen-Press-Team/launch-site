@@ -2,93 +2,57 @@ import { BookRow } from "@/components/BookRow"
 import { Timeline } from "@/components/Timeline"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import type { Product, CartLine, ShopifyAttribute } from '@/types/shopify'
+import type { Product, ProductVariant, CartLine, ShopifyAttribute } from '@/types/shopify'
 import { useCart, createStorefrontClient } from '@shopify/hydrogen-react'
 import { useState, useEffect, useMemo } from 'react'
 
-// FALLBACK MOCK DATA (if API fails or is loading)
-const MOCK_PRODUCTS: Product[] = [
-  { 
-    id: 'gid://shopify/Product/1', 
-    handle: 'Volume-1', 
-    title: 'Home Education',
-    images: { nodes: [] },
-    variants: {
-      nodes: [
-        { id: 'gid://shopify/ProductVariant/1234567890123', title: 'Sewn', price: { amount: '70.00', currencyCode: 'USD' }, availableForSale: true },
-        { id: 'gid://shopify/ProductVariant/1234567890124', title: 'Hardcover', price: { amount: '40.00', currencyCode: 'USD' }, availableForSale: true },
-        { id: 'gid://shopify/ProductVariant/1234567890125', title: 'Paperback', price: { amount: '20.00', currencyCode: 'USD' }, availableForSale: true }
-      ]
-    },
-    vol_number: { value: '1' }
-  },
-  { 
-    id: 'gid://shopify/Product/2', 
-    handle: 'Volume-2', 
-    title: 'Parents and Children',
-    images: { nodes: [] },
-    variants: {
-      nodes: [
-        { id: 'gid://shopify/ProductVariant/1234567890126', title: 'Sewn', price: { amount: '70.00', currencyCode: 'USD' }, availableForSale: true },
-        { id: 'gid://shopify/ProductVariant/1234567890127', title: 'Hardcover', price: { amount: '40.00', currencyCode: 'USD' }, availableForSale: true },
-        { id: 'gid://shopify/ProductVariant/1234567890128', title: 'Paperback', price: { amount: '20.00', currencyCode: 'USD' }, availableForSale: true },
-        { id: 'gid://shopify/ProductVariant/1234567890135', title: 'Kindle/EPUB', price: { amount: '7.00', currencyCode: 'USD' }, availableForSale: true }
-      ]
-    },
-    vol_number: { value: '2' }
-  },
-  { 
-    id: 'gid://shopify/Product/3', 
-    handle: 'Volume-3', 
-    title: 'School Education',
-    images: { nodes: [] },
-    variants: {
-      nodes: [
-        { id: 'gid://shopify/ProductVariant/1234567890129', title: 'Sewn', price: { amount: '70.00', currencyCode: 'USD' }, availableForSale: true },
-        { id: 'gid://shopify/ProductVariant/1234567890130', title: 'Hardcover', price: { amount: '40.00', currencyCode: 'USD' }, availableForSale: true },
-        { id: 'gid://shopify/ProductVariant/1234567890131', title: 'Paperback', price: { amount: '20.00', currencyCode: 'USD' }, availableForSale: true },
-        { id: 'gid://shopify/ProductVariant/1234567890136', title: 'Kindle/EPUB', price: { amount: '7.00', currencyCode: 'USD' }, availableForSale: true }
-      ]
-    },
-    vol_number: { value: '3' }
-  },
-  { 
-    id: 'gid://shopify/Product/6', 
-    handle: 'Volume-6', 
-    title: 'Philosophy of Education',
-    images: { nodes: [] },
-    variants: {
-      nodes: [
-        { id: 'gid://shopify/ProductVariant/1234567890132', title: 'Sewn', price: { amount: '70.00', currencyCode: 'USD' }, availableForSale: true },
-        { id: 'gid://shopify/ProductVariant/1234567890133', title: 'Hardcover', price: { amount: '40.00', currencyCode: 'USD' }, availableForSale: true },
-        { id: 'gid://shopify/ProductVariant/1234567890134', title: 'Paperback', price: { amount: '20.00', currencyCode: 'USD' }, availableForSale: true }
-      ]
-    },
-    vol_number: { value: '6' }
-  },
-]
+// PRODUCT CONFIGURATION
+const PRODUCT_CONFIG = {
+  sewn: [
+    { id: 'gid://shopify/Product/1', vol: '1', title: 'Home Education', subtitle: 'Sewn binding · Ships summer 2026' },
+    { id: 'gid://shopify/Product/2', vol: '2', title: 'Parents and Children', subtitle: 'Sewn binding · Ships summer 2026' },
+    { id: 'gid://shopify/Product/3', vol: '3', title: 'School Education', subtitle: 'Sewn binding · Ships summer 2026' },
+    { id: 'gid://shopify/Product/6', vol: '6', title: 'Philosophy of Education', subtitle: 'Sewn binding · Ships summer 2026' },
+  ],
+  hardcover: [
+    { id: 'gid://shopify/Product/11', vol: '1', title: 'Home Education', subtitle: 'Glued hardcover · Ships summer 2026' },
+    { id: 'gid://shopify/Product/12', vol: '2', title: 'Parents and Children', subtitle: 'Glued hardcover · Ships summer 2026' },
+    { id: 'gid://shopify/Product/13', vol: '3', title: 'School Education', subtitle: 'Glued hardcover · Ships summer 2026' },
+    { id: 'gid://shopify/Product/16', vol: '6', title: 'Philosophy of Education', subtitle: 'Glued hardcover · Ships summer 2026' },
+  ],
+  paperback: [
+    { id: 'gid://shopify/Product/21', vol: '1', title: 'Home Education', subtitle: 'Paperback · Ships summer 2026' },
+    { id: 'gid://shopify/Product/22', vol: '2', title: 'Parents and Children', subtitle: 'Paperback · Ships summer 2026' },
+    { id: 'gid://shopify/Product/23', vol: '3', title: 'School Education', subtitle: 'Paperback · Ships summer 2026' },
+    { id: 'gid://shopify/Product/26', vol: '6', title: 'Philosophy of Education', subtitle: 'Paperback · Ships summer 2026' },
+  ],
+  ebooks: [
+    { id: 'gid://shopify/Product/32', vol: '2', title: 'Volume 2 (Kindle/EPUB)', subtitle: 'Kindle/EPUB' },
+    { id: 'gid://shopify/Product/33', vol: '3', title: 'Volume 3 (Kindle/EPUB)', subtitle: 'Kindle/EPUB' },
+    { id: 'gid://shopify/Product/37', vol: 'both', title: 'Volumes 2 & 3 (Kindle/EPUB)', subtitle: 'Kindle/EPUB' },
+  ]
+};
 
-const EBOOK_BUNDLE_VARIANT_ID = 'gid://shopify/ProductVariant/1234567890137'
+const ALL_PRODUCT_IDS = [
+  ...PRODUCT_CONFIG.sewn.map(p => p.id),
+  ...PRODUCT_CONFIG.hardcover.map(p => p.id),
+  ...PRODUCT_CONFIG.paperback.map(p => p.id),
+  ...PRODUCT_CONFIG.ebooks.map(p => p.id),
+];
 
-const PRODUCTS_QUERY = `
-  query getProducts($first: Int!) {
-    products(first: $first) {
-      nodes {
+const PRICES_QUERY = `
+  query getPrices($ids: [ID!]!) {
+    nodes(ids: $ids) {
+      ... on Product {
         id
-        title
-        handle
-        vol_number: metafield(namespace: "custom", key: "vol_number") {
-          value
-        }
-        variants(first: 10) {
+        variants(first: 1) {
           nodes {
             id
-            title
-            availableForSale
             price {
               amount
               currencyCode
             }
+            availableForSale
           }
         }
       }
@@ -97,15 +61,13 @@ const PRODUCTS_QUERY = `
 `;
 
 export default function App() {
-  const [products, setProducts] = useState<Product[]>([])
+  const [prices, setPrices] = useState<Record<string, ProductVariant>>({})
   const [isLoading, setIsLoading] = useState(true)
   const [quantities, setQuantities] = useState<Record<string, number>>({})
   const [names, setNames] = useState<Record<string, string>>({})
   const { linesAdd, checkoutUrl, status, lines, totalQuantity } = useCart()
   const [selectedEbook, setSelectedEbook] = useState<string>('')
   const [isCartOpen, setIsCartOpen] = useState(false)
-
-  // Initialize Storefront Client
   const client = useMemo(() => createStorefrontClient({
     storeDomain: import.meta.env.VITE_SHOPIFY_STORE_DOMAIN,
     publicStorefrontToken: import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
@@ -113,38 +75,37 @@ export default function App() {
   }), [])
 
   useEffect(() => {
-    async function fetchProducts() {
+    async function fetchPrices() {
       try {
         const response = await fetch(client.getStorefrontApiUrl(), {
           method: 'POST',
           headers: client.getPublicTokenHeaders(),
           body: JSON.stringify({
-            query: PRODUCTS_QUERY,
-            variables: { first: 20 },
+            query: PRICES_QUERY,
+            variables: { ids: ALL_PRODUCT_IDS },
           }),
         });
 
         const { data, errors } = await response.json();
         if (errors) {
           console.error('Shopify API Errors:', errors);
-          setProducts(MOCK_PRODUCTS);
-        } else {
-          // Filter only the volumes we want to display
-          const volumes = ['Volume-1', 'Volume-2', 'Volume-3', 'Volume-6'];
-          const fetchedProducts = data.products.nodes.filter((p: any) => 
-            volumes.includes(p.handle)
-          );
-          setProducts(fetchedProducts.length > 0 ? fetchedProducts : MOCK_PRODUCTS);
+        } else if (data.nodes) {
+          const priceMap: Record<string, ProductVariant> = {};
+          data.nodes.forEach((node: any) => {
+            if (node && node.variants && node.variants.nodes.length > 0) {
+              priceMap[node.id] = node.variants.nodes[0];
+            }
+          });
+          setPrices(priceMap);
         }
       } catch (e) {
         console.error('Fetch error:', e);
-        setProducts(MOCK_PRODUCTS);
       } finally {
         setIsLoading(false);
       }
     }
 
-    fetchProducts();
+    fetchPrices();
   }, [client]);
 
   const handleQtyChange = (id: string, qty: number) => {
@@ -155,32 +116,27 @@ export default function App() {
     setNames(prev => ({ ...prev, [id]: name }))
   }
 
-  const addToCart = (format: string) => {
+  const addToCart = (format: 'sewn' | 'hardcover' | 'paperback' | 'ebooks') => {
     const linesToUpdate: Array<{ 
       merchandiseId: string; 
       quantity: number; 
       attributes?: ShopifyAttribute[] 
     }> = []
 
-    if (format === 'Kindle/EPUB') {
-      if (selectedEbook === 'both') {
-        linesToUpdate.push({ merchandiseId: EBOOK_BUNDLE_VARIANT_ID, quantity: 1 })
-      } else if (selectedEbook) {
-        const product = products.find(p => p.handle === selectedEbook)
-        const variant = product?.variants.nodes.find(v => v.title === 'Kindle/EPUB')
-        if (variant) {
-          linesToUpdate.push({ merchandiseId: variant.id, quantity: 1 })
-        }
+    if (format === 'ebooks') {
+      const ebook = PRODUCT_CONFIG.ebooks.find(e => e.vol === selectedEbook)
+      const variant = ebook ? prices[ebook.id] : null
+      if (variant) {
+        linesToUpdate.push({ merchandiseId: variant.id, quantity: 1 })
       }
     } else {
-      products.forEach(product => {
-        const key = `${format}-${product.id}`
-        const qty = quantities[key] || 0
-        const variant = product.variants.nodes.find(v => v.title === format)
+      PRODUCT_CONFIG[format].forEach(product => {
+        const qty = quantities[product.id] || 0
+        const variant = prices[product.id]
         if (qty > 0 && variant) {
           const attributes: ShopifyAttribute[] = []
-          if (names[key]) {
-            attributes.push({ key: 'Acknowledgment Name', value: names[key] })
+          if (names[product.id]) {
+            attributes.push({ key: 'Acknowledgment Name', value: names[product.id] })
           }
           
           linesToUpdate.push({
@@ -198,7 +154,21 @@ export default function App() {
     }
   }
 
-  const currentProducts = products.length > 0 ? products : MOCK_PRODUCTS;
+  // Fallback for missing prices (using $70, $40, $20 defaults)
+  const getPrice = (id: string, defaultAmount: string) => {
+    const variant = prices[id];
+    return variant ? variant.price : { amount: defaultAmount, currencyCode: 'USD' };
+  }
+
+  const getVariant = (id: string, defaultAmount: string): ProductVariant => {
+    const variant = prices[id];
+    return variant || { 
+      id: `fallback-${id}`, 
+      title: 'Default Variant', 
+      price: { amount: defaultAmount, currencyCode: 'USD' }, 
+      availableForSale: true 
+    };
+  }
 
   return (
     <div className="min-h-screen">
@@ -333,24 +303,31 @@ export default function App() {
               <div className="bg-[#fdf6f5] border-l-3 border-rust p-5 mb-6 rounded-[2px]">
                 <strong className="text-rust font-semibold">Limited to this print run.</strong> Sewn legacy bindings are only available through this summer 2026 bulk order.
               </div>
-              {currentProducts.map(product => {
-                const key = `Sewn-${product.id}`;
+              {PRODUCT_CONFIG.sewn.map(config => {
+                const variant = getVariant(config.id, '70.00');
                 return (
                   <BookRow
-                    key={product.id}
-                    product={product}
-                    variant={product.variants.nodes.find(v => v.title === 'Sewn')}
-                    note="Sewn binding · Ships summer 2026"
-                    quantity={quantities[key] || 0}
-                    onQuantityChange={(qty) => handleQtyChange(key, qty)}
-                    userName={names[key]}
-                    onNameChange={(name) => handleNameChange(key, name)}
+                    key={config.id}
+                    product={{
+                      id: config.id,
+                      title: config.title,
+                      handle: `volume-${config.vol}`,
+                      images: { nodes: [] },
+                      variants: { nodes: [variant] },
+                      vol_number: { value: config.vol }
+                    }}
+                    variant={variant}
+                    note={config.subtitle}
+                    quantity={quantities[config.id] || 0}
+                    onQuantityChange={(qty) => handleQtyChange(config.id, qty)}
+                    userName={names[config.id]}
+                    onNameChange={(name) => handleNameChange(config.id, name)}
                   />
                 );
               })}
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <Button
-                  onClick={() => addToCart('Sewn')}
+                  onClick={() => addToCart('sewn')}
                   className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
                 >
                   Add to Cart
@@ -363,24 +340,31 @@ export default function App() {
               <div className="bg-cream-card border border-border-soft p-5 mb-6 rounded-[2px] text-sm">
                 <strong>Want Volumes 1 & 6 sooner?</strong> Glued hardcover editions are <a href="#" className="text-moss font-medium underline">available now in our store</a>.
               </div>
-              {currentProducts.map(product => {
-                const key = `Hardcover-${product.id}`;
+              {PRODUCT_CONFIG.hardcover.map(config => {
+                const variant = getVariant(config.id, '40.00');
                 return (
                   <BookRow
-                    key={product.id}
-                    product={product}
-                    variant={product.variants.nodes.find(v => v.title === 'Hardcover')}
-                    note="Glued hardcover · Ships summer 2026"
-                    quantity={quantities[key] || 0}
-                    onQuantityChange={(qty) => handleQtyChange(key, qty)}
-                    userName={names[key]}
-                    onNameChange={(name) => handleNameChange(key, name)}
+                    key={config.id}
+                    product={{
+                      id: config.id,
+                      title: config.title,
+                      handle: `volume-${config.vol}`,
+                      images: { nodes: [] },
+                      variants: { nodes: [variant] },
+                      vol_number: { value: config.vol }
+                    }}
+                    variant={variant}
+                    note={config.subtitle}
+                    quantity={quantities[config.id] || 0}
+                    onQuantityChange={(qty) => handleQtyChange(config.id, qty)}
+                    userName={names[config.id]}
+                    onNameChange={(name) => handleNameChange(config.id, name)}
                   />
                 );
               })}
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <Button
-                  onClick={() => addToCart('Hardcover')}
+                  onClick={() => addToCart('hardcover')}
                   className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
                 >
                   Add to Cart
@@ -389,24 +373,31 @@ export default function App() {
             </TabsContent>
 
             <TabsContent value="Paperback" className="space-y-0 mt-0">
-              {currentProducts.map(product => {
-                const key = `Paperback-${product.id}`;
+              {PRODUCT_CONFIG.paperback.map(config => {
+                const variant = getVariant(config.id, '20.00');
                 return (
                   <BookRow
-                    key={product.id}
-                    product={product}
-                    variant={product.variants.nodes.find(v => v.title === 'Paperback')}
-                    note="Paperback · Ships summer 2026"
-                    quantity={quantities[key] || 0}
-                    onQuantityChange={(qty) => handleQtyChange(key, qty)}
-                    userName={names[key]}
-                    onNameChange={(name) => handleNameChange(key, name)}
+                    key={config.id}
+                    product={{
+                      id: config.id,
+                      title: config.title,
+                      handle: `volume-${config.vol}`,
+                      images: { nodes: [] },
+                      variants: { nodes: [variant] },
+                      vol_number: { value: config.vol }
+                    }}
+                    variant={variant}
+                    note={config.subtitle}
+                    quantity={quantities[config.id] || 0}
+                    onQuantityChange={(qty) => handleQtyChange(config.id, qty)}
+                    userName={names[config.id]}
+                    onNameChange={(name) => handleNameChange(config.id, name)}
                   />
                 );
               })}
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <Button
-                  onClick={() => addToCart('Paperback')}
+                  onClick={() => addToCart('paperback')}
                   className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
                 >
                   Add to Cart
@@ -425,12 +416,14 @@ export default function App() {
                         type="radio"
                         name="ebook"
                         className="accent-moss"
-                        checked={selectedEbook === 'Volume-2'}
-                        onChange={() => setSelectedEbook('Volume-2')}
+                        checked={selectedEbook === '2'}
+                        onChange={() => setSelectedEbook('2')}
                       />
                       <span className="text-sm font-medium">Volume 2</span>
                     </div>
-                    <div className="font-serif text-xl text-moss font-semibold">$7</div>
+                    <div className="font-serif text-xl text-moss font-semibold">
+                      ${parseFloat(getPrice(PRODUCT_CONFIG.ebooks.find(e => e.vol === '2')?.id || '', '7.00').amount).toFixed(0)}
+                    </div>
                   </label>
                   <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
                     <div className="flex items-center gap-2 mb-1">
@@ -438,12 +431,14 @@ export default function App() {
                         type="radio"
                         name="ebook"
                         className="accent-moss"
-                        checked={selectedEbook === 'Volume-3'}
-                        onChange={() => setSelectedEbook('Volume-3')}
+                        checked={selectedEbook === '3'}
+                        onChange={() => setSelectedEbook('3')}
                       />
                       <span className="text-sm font-medium">Volume 3</span>
                     </div>
-                    <div className="font-serif text-xl text-moss font-semibold">$7</div>
+                    <div className="font-serif text-xl text-moss font-semibold">
+                      ${parseFloat(getPrice(PRODUCT_CONFIG.ebooks.find(e => e.vol === '3')?.id || '', '7.00').amount).toFixed(0)}
+                    </div>
                   </label>
                   <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
                     <div className="flex items-center gap-2 mb-1">
@@ -456,14 +451,16 @@ export default function App() {
                       />
                       <span className="text-sm font-medium">Both new volumes</span>
                     </div>
-                    <div className="font-serif text-xl text-moss font-semibold">$13</div>
+                    <div className="font-serif text-xl text-moss font-semibold">
+                      ${parseFloat(getPrice(PRODUCT_CONFIG.ebooks.find(e => e.vol === 'both')?.id || '', '13.00').amount).toFixed(0)}
+                    </div>
                   </label>
                 </div>
                 <p className="text-xs italic text-moss mt-4 font-medium">✓ Ebooks are included free with any print order — no need to add them separately.</p>
               </div>
               <div className="mt-6">
                 <Button
-                  onClick={() => addToCart('Kindle/EPUB')}
+                  onClick={() => addToCart('ebooks')}
                   className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
                 >
                   Add to Cart
