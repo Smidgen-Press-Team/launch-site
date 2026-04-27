@@ -1,8 +1,8 @@
+import { CartProvider, ShopifyProvider } from '@shopify/hydrogen-react'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { ShopifyProvider, CartProvider } from '@shopify/hydrogen-react'
-import './index.css'
 import App from './App.tsx'
+import './index.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

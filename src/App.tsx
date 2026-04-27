@@ -2,14 +2,14 @@ import { BookRow } from "@/components/BookRow"
 import { Timeline } from "@/components/Timeline"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import type { Product, ProductVariant, CartLine, ShopifyAttribute } from '@/types/shopify'
-import { useCart, createStorefrontClient } from '@shopify/hydrogen-react'
-import { useState, useEffect, useMemo } from 'react'
+import type { CartLine, ProductVariant, ShopifyAttribute } from '@/types/shopify'
+import { createStorefrontClient, useCart } from '@shopify/hydrogen-react'
+import { useEffect, useMemo, useState } from 'react'
 
 // PRODUCT CONFIGURATION
 const PRODUCT_CONFIG = {
   sewn: [
-    { id: 'gid://shopify/Product/1', vol: '1', title: 'Home Education', subtitle: 'Sewn binding · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10315109007638', vol: '1', title: 'Home Education', subtitle: 'Sewn binding · Ships summer 2026' },
     { id: 'gid://shopify/Product/2', vol: '2', title: 'Parents and Children', subtitle: 'Sewn binding · Ships summer 2026' },
     { id: 'gid://shopify/Product/3', vol: '3', title: 'School Education', subtitle: 'Sewn binding · Ships summer 2026' },
     { id: 'gid://shopify/Product/6', vol: '6', title: 'Philosophy of Education', subtitle: 'Sewn binding · Ships summer 2026' },
@@ -65,7 +65,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [quantities, setQuantities] = useState<Record<string, number>>({})
   const [names, setNames] = useState<Record<string, string>>({})
-  const { linesAdd, checkoutUrl, status, lines, totalQuantity } = useCart()
+  const { linesAdd, checkoutUrl, status, lines, totalQuantity, discountCodesUpdate, cartReady } = useCart()
   const [selectedEbook, setSelectedEbook] = useState<string>('')
   const [isCartOpen, setIsCartOpen] = useState(false)
   const client = useMemo(() => createStorefrontClient({
@@ -77,6 +77,7 @@ export default function App() {
   useEffect(() => {
     async function fetchPrices() {
       try {
+        console.log('Fetching prices for IDs:', ALL_PRODUCT_IDS);
         const response = await fetch(client.getStorefrontApiUrl(), {
           method: 'POST',
           headers: client.getPublicTokenHeaders(),
@@ -86,14 +87,24 @@ export default function App() {
           }),
         });
 
-        const { data, errors } = await response.json();
+        const result = await response.json();
+        console.log('Shopify API Raw Result:', result);
+
+        const { data, errors } = result;
         if (errors) {
           console.error('Shopify API Errors:', errors);
-        } else if (data.nodes) {
+        } else if (data && data.nodes) {
           const priceMap: Record<string, ProductVariant> = {};
-          data.nodes.forEach((node: any) => {
-            if (node && node.variants && node.variants.nodes.length > 0) {
-              priceMap[node.id] = node.variants.nodes[0];
+          data.nodes.forEach((node: any, index: number) => {
+            if (node) {
+              if (node.variants && node.variants.nodes.length > 0) {
+                console.log(`Mapped variant for ${node.id}:`, node.variants.nodes[0]);
+                priceMap[node.id] = node.variants.nodes[0];
+              } else {
+                console.warn(`Node ${index} (${node.id}) has no variants.`);
+              }
+            } else {
+              console.warn(`Node at index ${index} is null. ID requested was: ${ALL_PRODUCT_IDS[index]}`);
             }
           });
           setPrices(priceMap);
@@ -108,6 +119,14 @@ export default function App() {
     fetchPrices();
   }, [client]);
 
+  const [hasSetDiscount, setHasSetDiscount] = useState(false);
+  useEffect(() => {
+    if (cartReady && !hasSetDiscount) {
+      discountCodesUpdate(['CMLaunch26Ship']);
+      setHasSetDiscount(true);
+    }
+  }, [cartReady, hasSetDiscount, discountCodesUpdate]);
+
   const handleQtyChange = (id: string, qty: number) => {
     setQuantities(prev => ({ ...prev, [id]: qty }))
   }
@@ -117,33 +136,40 @@ export default function App() {
   }
 
   const addToCart = (format: 'sewn' | 'hardcover' | 'paperback' | 'ebooks') => {
-    const linesToUpdate: Array<{ 
-      merchandiseId: string; 
-      quantity: number; 
-      attributes?: ShopifyAttribute[] 
+    const linesToUpdate: Array<{
+      merchandiseId: string;
+      quantity: number;
+      attributes?: ShopifyAttribute[]
     }> = []
 
     if (format === 'ebooks') {
       const ebook = PRODUCT_CONFIG.ebooks.find(e => e.vol === selectedEbook)
       const variant = ebook ? prices[ebook.id] : null
-      if (variant) {
+      if (variant && !variant.id.startsWith('fallback-')) {
         linesToUpdate.push({ merchandiseId: variant.id, quantity: 1 })
+      } else {
+        console.warn('No valid variant found for ebook:', selectedEbook);
       }
     } else {
       PRODUCT_CONFIG[format].forEach(product => {
         const qty = quantities[product.id] || 0
         const variant = prices[product.id]
-        if (qty > 0 && variant) {
-          const attributes: ShopifyAttribute[] = []
-          if (names[product.id]) {
-            attributes.push({ key: 'Acknowledgment Name', value: names[product.id] })
+
+        if (qty > 0) {
+          if (variant && !variant.id.startsWith('fallback-')) {
+            const attributes: ShopifyAttribute[] = []
+            if (names[product.id]) {
+              attributes.push({ key: 'Acknowledgment Name', value: names[product.id] })
+            }
+
+            linesToUpdate.push({
+              merchandiseId: variant.id,
+              quantity: qty,
+              attributes
+            })
+          } else {
+            console.warn(`No valid variant found for product ${product.id}. Check if Shopify GIDs are correct.`);
           }
-          
-          linesToUpdate.push({
-            merchandiseId: variant.id,
-            quantity: qty,
-            attributes
-          })
         }
       })
     }
@@ -151,6 +177,8 @@ export default function App() {
     if (linesToUpdate.length > 0) {
       linesAdd(linesToUpdate)
       setIsCartOpen(true)
+    } else {
+      alert('Please select a quantity and ensure products are correctly loaded from Shopify.');
     }
   }
 
@@ -162,11 +190,11 @@ export default function App() {
 
   const getVariant = (id: string, defaultAmount: string): ProductVariant => {
     const variant = prices[id];
-    return variant || { 
-      id: `fallback-${id}`, 
-      title: 'Default Variant', 
-      price: { amount: defaultAmount, currencyCode: 'USD' }, 
-      availableForSale: true 
+    return variant || {
+      id: `fallback-${id}`,
+      title: 'Default Variant',
+      price: { amount: defaultAmount, currencyCode: 'USD' },
+      availableForSale: true
     };
   }
 
@@ -188,7 +216,7 @@ export default function App() {
                     <div className="flex-1">
                       <h4 className="font-serif font-medium">{line.merchandise.product.title}</h4>
                       <p className="text-sm text-ink-muted">{line.merchandise.title}</p>
-                      
+
                       {/* Attributes Display */}
                       {line.attributes?.map((attr) => (
                         <p key={attr.key} className="text-xs italic text-moss mt-1">
@@ -231,7 +259,7 @@ export default function App() {
           <Button
             variant="outline"
             onClick={() => setIsCartOpen(true)}
-            className="border-gold-light text-parchment hover:bg-gold-light hover:text-ink rounded-[2px] tracking-[0.15em] uppercase text-xs px-4 py-2 h-auto"
+            className="border-gold-light text-ink hover:bg-gold-light hover:text-ink rounded-[2px] tracking-[0.15em] uppercase text-xs px-4 py-2 h-auto"
           >
             Cart ({totalQuantity || 0})
           </Button>
@@ -243,9 +271,9 @@ export default function App() {
         <p className="text-lg md:text-xl max-w-[34rem] mx-auto mb-8 leading-normal">
           A faithful restoration of Charlotte Mason's complete writings — bound to last generations. Preorder your copies and become part of the story.
         </p>
-        <Button variant="outline" className="border-gold-light text-parchment hover:bg-gold-light hover:text-ink rounded-[2px] tracking-[0.15em] uppercase text-xs px-7 py-3 h-auto">
+        {/*<Button variant="outline" className="border-gold-light text-parchment hover:bg-gold-light hover:text-ink rounded-[2px] tracking-[0.15em] uppercase text-xs px-7 py-3 h-auto">
           About this campaign & our timeline →
-        </Button>
+        </Button>*/}
       </header>
 
       {/* DEADLINE BANNER */}
