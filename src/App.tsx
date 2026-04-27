@@ -64,8 +64,8 @@ export default function App() {
   const [prices, setPrices] = useState<Record<string, ProductVariant>>({})
   const [isLoading, setIsLoading] = useState(true)
   const [quantities, setQuantities] = useState<Record<string, number>>({})
-  const [names, setNames] = useState<Record<string, string>>({})
-  const { linesAdd, checkoutUrl, status, lines, totalQuantity, discountCodesUpdate, cartReady } = useCart()
+  const [acknowledgmentName, setAcknowledgmentName] = useState('')
+  const { linesAdd, cartAttributesUpdate, checkoutUrl, status, lines, totalQuantity, discountCodesUpdate, cartReady, attributes } = useCart()
   const [selectedEbook, setSelectedEbook] = useState<string>('')
   const [isCartOpen, setIsCartOpen] = useState(false)
   const client = useMemo(() => createStorefrontClient({
@@ -131,15 +131,10 @@ export default function App() {
     setQuantities(prev => ({ ...prev, [id]: qty }))
   }
 
-  const handleNameChange = (id: string, name: string) => {
-    setNames(prev => ({ ...prev, [id]: name }))
-  }
-
   const addToCart = (format: 'sewn' | 'hardcover' | 'paperback' | 'ebooks') => {
     const linesToUpdate: Array<{
       merchandiseId: string;
       quantity: number;
-      attributes?: ShopifyAttribute[]
     }> = []
 
     if (format === 'ebooks') {
@@ -157,15 +152,9 @@ export default function App() {
 
         if (qty > 0) {
           if (variant && !variant.id.startsWith('fallback-')) {
-            const attributes: ShopifyAttribute[] = []
-            if (names[product.id]) {
-              attributes.push({ key: 'Acknowledgment Name', value: names[product.id] })
-            }
-
             linesToUpdate.push({
               merchandiseId: variant.id,
-              quantity: qty,
-              attributes
+              quantity: qty
             })
           } else {
             console.warn(`No valid variant found for product ${product.id}. Check if Shopify GIDs are correct.`);
@@ -176,6 +165,9 @@ export default function App() {
 
     if (linesToUpdate.length > 0) {
       linesAdd(linesToUpdate)
+      if (acknowledgmentName) {
+        cartAttributesUpdate([{ key: 'Acknowledgment Name', value: acknowledgmentName }])
+      }
       setIsCartOpen(true)
     } else {
       alert('Please select a quantity and ensure products are correctly loaded from Shopify.');
@@ -211,26 +203,43 @@ export default function App() {
             </div>
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
               {lines && lines.length > 0 ? (
-                (lines as unknown as CartLine[]).map((line) => (
-                  <div key={line.id} className="flex gap-4 items-start pb-6 border-b border-border-soft last:border-0">
-                    <div className="flex-1">
-                      <h4 className="font-serif font-medium">{line.merchandise.product.title}</h4>
-                      <p className="text-sm text-ink-muted">{line.merchandise.title}</p>
+                <>
+                  {(lines as unknown as CartLine[]).map((line) => (
+                    <div key={line.id} className="flex gap-4 items-start pb-6 border-b border-border-soft last:border-0">
+                      <div className="flex-1">
+                        <h4 className="font-serif font-medium">{line.merchandise.product.title}</h4>
+                        <p className="text-sm text-ink-muted">{line.merchandise.title}</p>
 
-                      {/* Attributes Display */}
-                      {line.attributes?.map((attr) => (
-                        <p key={attr.key} className="text-xs italic text-moss mt-1">
-                          {attr.key}: {attr.value}
-                        </p>
-                      ))}
+                        {/* Attributes Display (Line Items - now less likely) */}
+                        {line.attributes?.map((attr) => (
+                          <p key={attr.key} className="text-xs italic text-moss mt-1">
+                            {attr.key}: {attr.value}
+                          </p>
+                        ))}
 
-                      <div className="flex justify-between items-center mt-2">
-                        <span className="text-sm">Qty: {line.quantity}</span>
-                        <span className="font-serif font-semibold">${parseFloat(line.cost.totalAmount.amount).toFixed(2)}</span>
+                        <div className="flex justify-between items-center mt-2">
+                          <span className="text-sm">Qty: {line.quantity}</span>
+                          <span className="font-serif font-semibold">${parseFloat(line.cost.totalAmount.amount).toFixed(2)}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  ))}
+
+                  {/* Cart Attributes Display */}
+                  {attributes && attributes.length > 0 && (
+                    <div className="mt-4 p-4 bg-cream-card border border-border-soft rounded-[2px]">
+                      <h3 className="text-xs font-semibold tracking-wider uppercase text-ink-muted mb-2">Order Attributes</h3>
+                      {attributes.map((attr) => {
+                        if (!attr) return null;
+                        return (
+                          <p key={attr.key} className="text-sm italic text-moss">
+                            {attr.key}: <span className="font-medium">{attr.value}</span>
+                          </p>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
               ) : (
                 <p className="text-center text-ink-muted py-12 italic text-lg">Your cart is currently empty.</p>
               )}
@@ -299,203 +308,213 @@ export default function App() {
         {isLoading ? (
           <div className="py-20 text-center italic text-ink-muted">Loading formats...</div>
         ) : (
-          <Tabs defaultValue="Sewn" className="w-full">
-            <TabsList className="grid grid-cols-2 md:grid-cols-4 h-auto p-0 bg-transparent border border-border-custom rounded-[3px] overflow-visible max-w-[34rem] mb-8">
-              <TabsTrigger
-                value="Sewn"
-                className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
-              >
-                Sewn Legacy <span className="text-[10px] lowercase normal-case opacity-80">$50 / vol</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="Hardcover"
-                className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
-              >
-                Hardcover <span className="text-[10px] lowercase normal-case opacity-80">$35 / vol</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="Paperback"
-                className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
-              >
-                Paperback <span className="text-[10px] lowercase normal-case opacity-80">$20 / vol</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="Kindle/EPUB"
-                className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
-              >
-                Kindle/EPUB <span className="text-[10px] lowercase normal-case opacity-80">from $7</span>
-              </TabsTrigger>
-            </TabsList>
+          <>
+            <div className="max-w-[34rem] mb-10 pb-6 border-b border-border-soft animate-in fade-in slide-in-from-top-2 duration-300">
+              <label className="block text-xs font-semibold tracking-wider uppercase text-ink-muted mb-2.5">
+                Name for acknowledgment (Optional)
+              </label>
+              <input
+                type="text"
+                value={acknowledgmentName}
+                onChange={(e) => setAcknowledgmentName(e.target.value)}
+                placeholder="How should your name appear in the book?"
+                className="w-full bg-white border border-border-custom rounded-[2px] px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
+              />
+              <p className="text-[11px] text-ink-muted italic mt-2.5">This name will be used for all items in your order.</p>
+            </div>
 
-            <TabsContent value="Sewn" className="space-y-0 mt-0">
-              <div className="bg-[#fdf6f5] border-l-3 border-rust p-5 mb-6 rounded-[2px]">
-                <strong className="text-rust font-semibold">Limited to this print run.</strong> Sewn legacy bindings are only available through this summer 2026 bulk order.
-              </div>
-              {PRODUCT_CONFIG.sewn.map(config => {
-                const variant = getVariant(config.id, '70.00');
-                return (
-                  <BookRow
-                    key={config.id}
-                    product={{
-                      id: config.id,
-                      title: config.title,
-                      handle: `volume-${config.vol}`,
-                      images: { nodes: [] },
-                      variants: { nodes: [variant] },
-                      vol_number: { value: config.vol }
-                    }}
-                    variant={variant}
-                    note={config.subtitle}
-                    quantity={quantities[config.id] || 0}
-                    onQuantityChange={(qty) => handleQtyChange(config.id, qty)}
-                    userName={names[config.id]}
-                    onNameChange={(name) => handleNameChange(config.id, name)}
-                  />
-                );
-              })}
-              <div className="mt-10 flex flex-wrap items-center gap-5">
-                <Button
-                  onClick={() => addToCart('sewn')}
-                  className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+            <Tabs defaultValue="Sewn" className="w-full">
+              <TabsList className="grid grid-cols-2 md:grid-cols-4 h-auto p-0 bg-transparent border border-border-custom rounded-[3px] overflow-visible max-w-[34rem] mb-8">
+                <TabsTrigger
+                  value="Sewn"
+                  className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
                 >
-                  Add to Cart
-                </Button>
-                <span className="text-xs italic text-ink-muted">Charged now · Ships summer 2026 · Ebook included free</span>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="Hardcover" className="space-y-0 mt-0">
-              <div className="bg-cream-card border border-border-soft p-5 mb-6 rounded-[2px] text-sm">
-                <strong>Want Volumes 1 & 6 sooner?</strong> Glued hardcover editions are <a href="#" className="text-moss font-medium underline">available now in our store</a>.
-              </div>
-              {PRODUCT_CONFIG.hardcover.map(config => {
-                const variant = getVariant(config.id, '40.00');
-                return (
-                  <BookRow
-                    key={config.id}
-                    product={{
-                      id: config.id,
-                      title: config.title,
-                      handle: `volume-${config.vol}`,
-                      images: { nodes: [] },
-                      variants: { nodes: [variant] },
-                      vol_number: { value: config.vol }
-                    }}
-                    variant={variant}
-                    note={config.subtitle}
-                    quantity={quantities[config.id] || 0}
-                    onQuantityChange={(qty) => handleQtyChange(config.id, qty)}
-                    userName={names[config.id]}
-                    onNameChange={(name) => handleNameChange(config.id, name)}
-                  />
-                );
-              })}
-              <div className="mt-10 flex flex-wrap items-center gap-5">
-                <Button
-                  onClick={() => addToCart('hardcover')}
-                  className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  Sewn Legacy <span className="text-[10px] lowercase normal-case opacity-80">$50 / vol</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="Hardcover"
+                  className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
                 >
-                  Add to Cart
-                </Button>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="Paperback" className="space-y-0 mt-0">
-              {PRODUCT_CONFIG.paperback.map(config => {
-                const variant = getVariant(config.id, '20.00');
-                return (
-                  <BookRow
-                    key={config.id}
-                    product={{
-                      id: config.id,
-                      title: config.title,
-                      handle: `volume-${config.vol}`,
-                      images: { nodes: [] },
-                      variants: { nodes: [variant] },
-                      vol_number: { value: config.vol }
-                    }}
-                    variant={variant}
-                    note={config.subtitle}
-                    quantity={quantities[config.id] || 0}
-                    onQuantityChange={(qty) => handleQtyChange(config.id, qty)}
-                    userName={names[config.id]}
-                    onNameChange={(name) => handleNameChange(config.id, name)}
-                  />
-                );
-              })}
-              <div className="mt-10 flex flex-wrap items-center gap-5">
-                <Button
-                  onClick={() => addToCart('paperback')}
-                  className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  Hardcover <span className="text-[10px] lowercase normal-case opacity-80">$35 / vol</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="Paperback"
+                  className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
                 >
-                  Add to Cart
-                </Button>
-              </div>
-            </TabsContent>
+                  Paperback <span className="text-[10px] lowercase normal-case opacity-80">$20 / vol</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="Kindle/EPUB"
+                  className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
+                >
+                  Kindle/EPUB <span className="text-[10px] lowercase normal-case opacity-80">from $7</span>
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="Kindle/EPUB" className="space-y-0 mt-0">
-              <div className="bg-cream-card border border-border-soft p-6 mb-6 rounded-[2px]">
-                <h4 className="font-serif text-lg font-medium mb-2">Kindle & EPUB — New Volumes</h4>
-                <p className="text-sm text-ink-muted mb-4">Volumes 2 & 3 are available as Kindle/EPUB. Choose one or both.</p>
-                <div className="flex flex-wrap gap-3">
-                  <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <input
-                        type="radio"
-                        name="ebook"
-                        className="accent-moss"
-                        checked={selectedEbook === '2'}
-                        onChange={() => setSelectedEbook('2')}
-                      />
-                      <span className="text-sm font-medium">Volume 2</span>
-                    </div>
-                    <div className="font-serif text-xl text-moss font-semibold">
-                      ${parseFloat(getPrice(PRODUCT_CONFIG.ebooks.find(e => e.vol === '2')?.id || '', '7.00').amount).toFixed(0)}
-                    </div>
-                  </label>
-                  <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <input
-                        type="radio"
-                        name="ebook"
-                        className="accent-moss"
-                        checked={selectedEbook === '3'}
-                        onChange={() => setSelectedEbook('3')}
-                      />
-                      <span className="text-sm font-medium">Volume 3</span>
-                    </div>
-                    <div className="font-serif text-xl text-moss font-semibold">
-                      ${parseFloat(getPrice(PRODUCT_CONFIG.ebooks.find(e => e.vol === '3')?.id || '', '7.00').amount).toFixed(0)}
-                    </div>
-                  </label>
-                  <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <input
-                        type="radio"
-                        name="ebook"
-                        className="accent-moss"
-                        checked={selectedEbook === 'both'}
-                        onChange={() => setSelectedEbook('both')}
-                      />
-                      <span className="text-sm font-medium">Both new volumes</span>
-                    </div>
-                    <div className="font-serif text-xl text-moss font-semibold">
-                      ${parseFloat(getPrice(PRODUCT_CONFIG.ebooks.find(e => e.vol === 'both')?.id || '', '13.00').amount).toFixed(0)}
-                    </div>
-                  </label>
+              <TabsContent value="Sewn" className="space-y-0 mt-0">
+                <div className="bg-[#fdf6f5] border-l-3 border-rust p-5 mb-6 rounded-[2px]">
+                  <strong className="text-rust font-semibold">Limited to this print run.</strong> Sewn legacy bindings are only available through this summer 2026 bulk order.
                 </div>
-                <p className="text-xs italic text-moss mt-4 font-medium">✓ Ebooks are included free with any print order — no need to add them separately.</p>
-              </div>
-              <div className="mt-6">
-                <Button
-                  onClick={() => addToCart('ebooks')}
-                  className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </TabsContent>
-          </Tabs>
+                {PRODUCT_CONFIG.sewn.map(config => {
+                  const variant = getVariant(config.id, '70.00');
+                  return (
+                    <BookRow
+                      key={config.id}
+                      product={{
+                        id: config.id,
+                        title: config.title,
+                        handle: `volume-${config.vol}`,
+                        images: { nodes: [] },
+                        variants: { nodes: [variant] },
+                        vol_number: { value: config.vol }
+                      }}
+                      variant={variant}
+                      note={config.subtitle}
+                      quantity={quantities[config.id] || 0}
+                      onQuantityChange={(qty) => handleQtyChange(config.id, qty)}
+                    />
+                  );
+                })}
+                <div className="mt-10 flex flex-wrap items-center gap-5">
+                  <Button
+                    onClick={() => addToCart('sewn')}
+                    className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  >
+                    Add to Cart
+                  </Button>
+                  <span className="text-xs italic text-ink-muted">Charged now · Ships summer 2026 · Ebook included free</span>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="Hardcover" className="space-y-0 mt-0">
+                <div className="bg-cream-card border border-border-soft p-5 mb-6 rounded-[2px] text-sm">
+                  <strong>Want Volumes 1 & 6 sooner?</strong> Glued hardcover editions are <a href="#" className="text-moss font-medium underline">available now in our store</a>.
+                </div>
+                {PRODUCT_CONFIG.hardcover.map(config => {
+                  const variant = getVariant(config.id, '40.00');
+                  return (
+                    <BookRow
+                      key={config.id}
+                      product={{
+                        id: config.id,
+                        title: config.title,
+                        handle: `volume-${config.vol}`,
+                        images: { nodes: [] },
+                        variants: { nodes: [variant] },
+                        vol_number: { value: config.vol }
+                      }}
+                      variant={variant}
+                      note={config.subtitle}
+                      quantity={quantities[config.id] || 0}
+                      onQuantityChange={(qty) => handleQtyChange(config.id, qty)}
+                    />
+                  );
+                })}
+                <div className="mt-10 flex flex-wrap items-center gap-5">
+                  <Button
+                    onClick={() => addToCart('hardcover')}
+                    className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="Paperback" className="space-y-0 mt-0">
+                {PRODUCT_CONFIG.paperback.map(config => {
+                  const variant = getVariant(config.id, '20.00');
+                  return (
+                    <BookRow
+                      key={config.id}
+                      product={{
+                        id: config.id,
+                        title: config.title,
+                        handle: `volume-${config.vol}`,
+                        images: { nodes: [] },
+                        variants: { nodes: [variant] },
+                        vol_number: { value: config.vol }
+                      }}
+                      variant={variant}
+                      note={config.subtitle}
+                      quantity={quantities[config.id] || 0}
+                      onQuantityChange={(qty) => handleQtyChange(config.id, qty)}
+                    />
+                  );
+                })}
+                <div className="mt-10 flex flex-wrap items-center gap-5">
+                  <Button
+                    onClick={() => addToCart('paperback')}
+                    className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="Kindle/EPUB" className="space-y-0 mt-0">
+                <div className="bg-cream-card border border-border-soft p-6 mb-6 rounded-[2px]">
+                  <h4 className="font-serif text-lg font-medium mb-2">Kindle & EPUB — New Volumes</h4>
+                  <p className="text-sm text-ink-muted mb-4">Volumes 2 & 3 are available as Kindle/EPUB. Choose one or both.</p>
+                  <div className="flex flex-wrap gap-3">
+                    <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
+                      <div className="flex items-center gap-2 mb-1">
+                        <input
+                          type="radio"
+                          name="ebook"
+                          className="accent-moss"
+                          checked={selectedEbook === '2'}
+                          onChange={() => setSelectedEbook('2')}
+                        />
+                        <span className="text-sm font-medium">Volume 2</span>
+                      </div>
+                      <div className="font-serif text-xl text-moss font-semibold">
+                        ${parseFloat(getPrice(PRODUCT_CONFIG.ebooks.find(e => e.vol === '2')?.id || '', '7.00').amount).toFixed(0)}
+                      </div>
+                    </label>
+                    <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
+                      <div className="flex items-center gap-2 mb-1">
+                        <input
+                          type="radio"
+                          name="ebook"
+                          className="accent-moss"
+                          checked={selectedEbook === '3'}
+                          onChange={() => setSelectedEbook('3')}
+                        />
+                        <span className="text-sm font-medium">Volume 3</span>
+                      </div>
+                      <div className="font-serif text-xl text-moss font-semibold">
+                        ${parseFloat(getPrice(PRODUCT_CONFIG.ebooks.find(e => e.vol === '3')?.id || '', '7.00').amount).toFixed(0)}
+                      </div>
+                    </label>
+                    <label className="flex-1 min-w-[9rem] border border-border-custom rounded-[2px] p-4 bg-white cursor-pointer hover:border-gold transition-colors">
+                      <div className="flex items-center gap-2 mb-1">
+                        <input
+                          type="radio"
+                          name="ebook"
+                          className="accent-moss"
+                          checked={selectedEbook === 'both'}
+                          onChange={() => setSelectedEbook('both')}
+                        />
+                        <span className="text-sm font-medium">Both new volumes</span>
+                      </div>
+                      <div className="font-serif text-xl text-moss font-semibold">
+                        ${parseFloat(getPrice(PRODUCT_CONFIG.ebooks.find(e => e.vol === 'both')?.id || '', '13.00').amount).toFixed(0)}
+                      </div>
+                    </label>
+                  </div>
+                  <p className="text-xs italic text-moss mt-4 font-medium">✓ Ebooks are included free with any print order — no need to add them separately.</p>
+                </div>
+                <div className="mt-6">
+                  <Button
+                    onClick={() => addToCart('ebooks')}
+                    className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </>
         )}
 
         <div className="bg-warm-mid border-l-3 border-gold-accent p-6 mt-10 rounded-[2px] flex flex-wrap items-center justify-between gap-3">

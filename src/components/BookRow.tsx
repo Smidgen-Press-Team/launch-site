@@ -7,8 +7,6 @@ export interface BookRowProps {
   note: string
   quantity: number
   onQuantityChange: (qty: number) => void
-  userName?: string
-  onNameChange?: (name: string) => void
 }
 
 export function BookRow({ 
@@ -16,9 +14,7 @@ export function BookRow({
   variant, 
   note, 
   quantity, 
-  onQuantityChange,
-  userName,
-  onNameChange
+  onQuantityChange
 }: BookRowProps) {
   if (!variant) return null
 
@@ -43,21 +39,6 @@ export function BookRow({
           <QuantityControl value={quantity} onChange={onQuantityChange} />
         </div>
       </div>
-      
-      {quantity >= 1 && onNameChange && (
-        <div className="pb-5 animate-in fade-in slide-in-from-top-2 duration-300">
-          <label className="block text-xs font-semibold tracking-wider uppercase text-ink-muted mb-2">
-            Name for acknowledgment (Optional)
-          </label>
-          <input
-            type="text"
-            value={userName || ''}
-            onChange={(e) => onNameChange(e.target.value)}
-            placeholder="How should your name appear in the book?"
-            className="w-full max-w-md bg-white border border-border-custom rounded-[2px] px-4 py-2.5 text-sm focus:outline-none focus:border-gold transition-colors"
-          />
-        </div>
-      )}
     </div>
   )
 }
