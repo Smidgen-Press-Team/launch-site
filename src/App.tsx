@@ -9,22 +9,22 @@ import { useEffect, useMemo, useState } from 'react'
 // PRODUCT CONFIGURATION
 const PRODUCT_CONFIG = {
   sewn: [
-    { id: 'gid://shopify/Product/10315109007638', vol: '1', title: 'Home Education', subtitle: 'Sewn binding · Ships summer 2026' },
-    { id: 'gid://shopify/Product/2', vol: '2', title: 'Parents and Children', subtitle: 'Sewn binding · Ships summer 2026' },
-    { id: 'gid://shopify/Product/3', vol: '3', title: 'School Education', subtitle: 'Sewn binding · Ships summer 2026' },
-    { id: 'gid://shopify/Product/6', vol: '6', title: 'Philosophy of Education', subtitle: 'Sewn binding · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10502195380502', vol: '1', title: 'Home Education', subtitle: 'Sewn binding · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10502200819990', vol: '2', title: 'Parents and Children', subtitle: 'Sewn binding · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10502202523926', vol: '3', title: 'School Education', subtitle: 'Sewn binding · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10502203015446', vol: '6', title: 'Philosophy of Education', subtitle: 'Sewn binding · Ships summer 2026' },
   ],
   hardcover: [
-    { id: 'gid://shopify/Product/11', vol: '1', title: 'Home Education', subtitle: 'Glued hardcover · Ships summer 2026' },
-    { id: 'gid://shopify/Product/12', vol: '2', title: 'Parents and Children', subtitle: 'Glued hardcover · Ships summer 2026' },
-    { id: 'gid://shopify/Product/13', vol: '3', title: 'School Education', subtitle: 'Glued hardcover · Ships summer 2026' },
-    { id: 'gid://shopify/Product/16', vol: '6', title: 'Philosophy of Education', subtitle: 'Glued hardcover · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10502203212054', vol: '1', title: 'Home Education', subtitle: 'Glued hardcover with Dust Jacket · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10502350962966', vol: '2', title: 'Parents and Children', subtitle: 'Glued hardcover with Dust Jacket · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10502373376278', vol: '1', title: 'Home Education', subtitle: 'Glued hardcover (No Dust Jacket) · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10502377537814', vol: '2', title: 'Parents and Children', subtitle: 'Glued hardcover (No Dust Jacket) · Ships summer 2026' },
   ],
   paperback: [
-    { id: 'gid://shopify/Product/21', vol: '1', title: 'Home Education', subtitle: 'Paperback · Ships summer 2026' },
-    { id: 'gid://shopify/Product/22', vol: '2', title: 'Parents and Children', subtitle: 'Paperback · Ships summer 2026' },
-    { id: 'gid://shopify/Product/23', vol: '3', title: 'School Education', subtitle: 'Paperback · Ships summer 2026' },
-    { id: 'gid://shopify/Product/26', vol: '6', title: 'Philosophy of Education', subtitle: 'Paperback · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10502342607126', vol: '1', title: 'Home Education', subtitle: 'Paperback · Ships summer 2026' },
+    { id: 'gid://shopify/Product/10502354698518', vol: '2', title: 'Parents and Children', subtitle: 'Paperback · Ships summer 2026' },
+    //{ id: 'gid://shopify/Product/23', vol: '3', title: 'School Education', subtitle: 'Paperback · Ships summer 2026' },
+    //{ id: 'gid://shopify/Product/26', vol: '6', title: 'Philosophy of Education', subtitle: 'Paperback · Ships summer 2026' },
   ],
   ebooks: [
     { id: 'gid://shopify/Product/32', vol: '2', title: 'Volume 2 (Kindle/EPUB)', subtitle: 'Kindle/EPUB' },
@@ -305,13 +305,13 @@ export default function App() {
                 value="Sewn"
                 className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
-                Sewn Legacy <span className="text-[10px] lowercase normal-case opacity-80">$70 / vol</span>
+                Sewn Legacy <span className="text-[10px] lowercase normal-case opacity-80">$50 / vol</span>
               </TabsTrigger>
               <TabsTrigger
                 value="Hardcover"
                 className="data-active:bg-ink data-active:text-parchment rounded-none border-r border-border-custom last:border-r-0 py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
-                Hardcover <span className="text-[10px] lowercase normal-case opacity-80">$40 / vol</span>
+                Hardcover <span className="text-[10px] lowercase normal-case opacity-80">$35 / vol</span>
               </TabsTrigger>
               <TabsTrigger
                 value="Paperback"
