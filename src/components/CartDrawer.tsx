@@ -50,14 +50,14 @@ export function CartDrawer({
               {cartLines.map((line) => (
                 <div key={line.id} className="flex gap-4 items-start pb-6 border-b border-border-soft last:border-0">
                   <div className="flex-1">
-                    <div className="flex justify-between items-start mb-1">
+                    <div className="flex justify-between items-start mb-6">
                       <h4 className="font-serif font-medium">{idToTitleMap(line.merchandise.product.id) ?? line.merchandise.product.title}</h4>
-                      <button
+                      {/*<button
                         onClick={() => linesRemove([line.id])}
                         className="text-ink-muted hover:text-rust text-xs uppercase tracking-wider font-medium"
                       >
                         Remove
-                      </button>
+                      </button>*/}
                     </div>
                     {/*<p className="text-sm text-ink-muted mb-3">{line.merchandise.title}</p>*/}
 
@@ -68,16 +68,21 @@ export function CartDrawer({
                     ))}
 
                     <div className="flex justify-between items-center mt-2">
-                      <QuantityControl
-                        value={line.quantity}
-                        onChange={(qty) => {
-                          if (qty === 0) {
-                            linesRemove([line.id])
-                          } else {
-                            linesUpdate([{ id: line.id, quantity: qty }])
-                          }
-                        }}
-                      />
+                      <div className="flex gap-4 items-center">
+                        <QuantityControl
+                          value={line.quantity}
+                          onChange={(qty) => {
+                            if (qty === 0) {
+                              linesRemove([line.id])
+                            } else {
+                              linesUpdate([{ id: line.id, quantity: qty }])
+                            }
+                          }}
+                        />
+                        <Button variant={"ghost"} onClick={() => linesRemove([line.id])}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="48" width="48">
+                          <path fill="#000000" d="M15.2188 0c0.2229 0.0000058603 0.4394 0.0747674 0.6152 0.211914 0.1757 0.137143 0.3013 0.328695 0.3555 0.544922L16.5 2H24v2h-3v17c0 0.7957 -0.3163 1.5585 -0.8789 2.1211S18.7957 24 18 24H6c-0.79565 0 -1.55849 -0.3163 -2.12109 -0.8789C3.3163 22.5585 3 21.7957 3 21V4H0V2h7.5L7.81055 0.756836c0.05418 -0.216227 0.17973 -0.407779 0.35547 -0.544922C8.34176 0.0747674 8.55833 0.0000058603 8.78125 0zM5 21c0 0.2652 0.10543 0.5195 0.29297 0.707 0.18754 0.1876 0.44181 0.293 0.70703 0.293h12c0.2652 0 0.5195 -0.1054 0.707 -0.293 0.1876 -0.1875 0.293 -0.4418 0.293 -0.707V4H5zm5 -2H8V7h2zm6 0h-2V7h2z" stroke-width="1"></path>
+                        </svg></Button>
+                      </div>
                       <span className="font-serif font-semibold">${parseFloat(line.cost.totalAmount.amount).toFixed(2)}</span>
                     </div>
                   </div>
