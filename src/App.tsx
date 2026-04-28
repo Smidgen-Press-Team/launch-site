@@ -2,7 +2,7 @@ import { BookRow } from "@/components/BookRow"
 import { Timeline } from "@/components/Timeline"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import type { CartLine, ProductVariant, ShopifyAttribute } from '@/types/shopify'
+import type { CartLine, ProductVariant } from '@/types/shopify'
 import { createStorefrontClient, useCart } from '@shopify/hydrogen-react'
 import { useEffect, useMemo, useState } from 'react'
 
