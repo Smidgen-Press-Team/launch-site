@@ -171,7 +171,7 @@ export default function App() {
       }
       setIsCartOpen(true)
     } else {
-      alert('Please select a quantity and ensure products are correctly loaded from Shopify.');
+      alert('Please select at least one book');
     }
   }
 
@@ -210,7 +210,7 @@ export default function App() {
                       <div className="flex-1">
                         <div className="flex justify-between items-start mb-1">
                           <h4 className="font-serif font-medium">{line.merchandise.product.title}</h4>
-                          <button 
+                          <button
                             onClick={() => linesRemove([line.id])}
                             className="text-ink-muted hover:text-rust text-xs uppercase tracking-wider font-medium"
                           >
@@ -227,15 +227,15 @@ export default function App() {
                         ))}
 
                         <div className="flex justify-between items-center mt-2">
-                          <QuantityControl 
-                            value={line.quantity} 
+                          <QuantityControl
+                            value={line.quantity}
                             onChange={(qty) => {
                               if (qty === 0) {
                                 linesRemove([line.id])
                               } else {
                                 linesUpdate([{ id: line.id, quantity: qty }])
                               }
-                            }} 
+                            }}
                           />
                           <span className="font-serif font-semibold">${parseFloat(line.cost.totalAmount.amount).toFixed(2)}</span>
                         </div>
