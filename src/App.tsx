@@ -1,4 +1,5 @@
 import { BookRow } from "@/components/BookRow"
+import { QuantityControl } from "@/components/QuantityControl"
 import { Timeline } from "@/components/Timeline"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -65,7 +66,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [quantities, setQuantities] = useState<Record<string, number>>({})
   const [acknowledgmentName, setAcknowledgmentName] = useState('')
-  const { linesAdd, cartAttributesUpdate, checkoutUrl, status, lines, totalQuantity, discountCodesUpdate, cartReady, attributes } = useCart()
+  const { linesAdd, linesUpdate, linesRemove, cartAttributesUpdate, checkoutUrl, status, lines, totalQuantity, discountCodesUpdate, cartReady, attributes } = useCart()
   const [selectedEbook, setSelectedEbook] = useState<string>('')
   const [isCartOpen, setIsCartOpen] = useState(false)
   const client = useMemo(() => createStorefrontClient({
@@ -207,8 +208,16 @@ export default function App() {
                   {(lines as unknown as CartLine[]).map((line) => (
                     <div key={line.id} className="flex gap-4 items-start pb-6 border-b border-border-soft last:border-0">
                       <div className="flex-1">
-                        <h4 className="font-serif font-medium">{line.merchandise.product.title}</h4>
-                        <p className="text-sm text-ink-muted">{line.merchandise.title}</p>
+                        <div className="flex justify-between items-start mb-1">
+                          <h4 className="font-serif font-medium">{line.merchandise.product.title}</h4>
+                          <button 
+                            onClick={() => linesRemove([line.id])}
+                            className="text-ink-muted hover:text-rust text-xs uppercase tracking-wider font-medium"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                        <p className="text-sm text-ink-muted mb-3">{line.merchandise.title}</p>
 
                         {/* Attributes Display (Line Items - now less likely) */}
                         {line.attributes?.map((attr) => (
@@ -218,7 +227,16 @@ export default function App() {
                         ))}
 
                         <div className="flex justify-between items-center mt-2">
-                          <span className="text-sm">Qty: {line.quantity}</span>
+                          <QuantityControl 
+                            value={line.quantity} 
+                            onChange={(qty) => {
+                              if (qty === 0) {
+                                linesRemove([line.id])
+                              } else {
+                                linesUpdate([{ id: line.id, quantity: qty }])
+                              }
+                            }} 
+                          />
                           <span className="font-serif font-semibold">${parseFloat(line.cost.totalAmount.amount).toFixed(2)}</span>
                         </div>
                       </div>
