@@ -43,7 +43,7 @@ export interface CartLine {
   id: string;
   quantity: number;
   merchandise: ProductVariant & {
-    product: Pick<Product, 'title' | 'handle'>;
+    product: Pick<Product, 'id' | 'title' | 'handle'>;
   };
   cost: {
     totalAmount: MoneyV2;
