@@ -288,10 +288,7 @@ export function PreorderSection({
         </>
       )}
 
-      <div className="bg-warm-mid border-l-3 border-gold-accent p-6 mt-10 rounded-[2px] flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm">📖 <strong>Looking for Volumes 4 & 5?</strong> They're coming — we anticipate a 2027 release.</p>
-        <a href="#" className="text-xs font-semibold tracking-[0.12em] uppercase text-moss underline hover:text-ink whitespace-nowrap">Read our update →</a>
-      </div>
+
     </section>
   );
 }
