@@ -145,12 +145,17 @@ export const TITLE_CONFIG: Record<string, string> = {
   "gid://shopify/Product/10504626241814": "Volume 2 & 3 (Kindle/EPUB)",
   "gid://shopify/Product/10504630993174": "Volume 1 & 6 (Kindle/EPUB)",
   "gid://shopify/Product/10504632664342": "Volumes 1, 2, 3, & 6 (Kindle/EPUB)",
+  "gid://shopify/Product/10504417345814":
+    "School Education - Hardcover with Dust Jacket",
+  "gid://shopify/Product/10504419541270":
+    "Philosophy of Education - Hardcover with Dust Jacket",
 };
 
 export const ALL_PRODUCT_IDS = [
   ...PRODUCT_CONFIG.sewn.map((p) => p.id),
   ...PRODUCT_CONFIG.hardcover.map((p) => p.id),
   ...PRODUCT_CONFIG.paperback.map((p) => p.id),
+  ...PRODUCT_CONFIG.hardcover_dj.map((p) => p.id),
   ...PRODUCT_CONFIG.ebooks.map((p) => p.id),
 ];
 

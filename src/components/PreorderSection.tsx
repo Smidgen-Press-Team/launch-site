@@ -12,7 +12,7 @@ interface PreorderSectionProps {
   onQtyChange: (id: string, qty: number) => void;
   selectedEbook: string;
   setSelectedEbook: (vol: string) => void;
-  addToCart: (format: 'sewn' | 'hardcover' | 'paperback' | 'ebooks') => void;
+  addToCart: (format: 'sewn' | 'hardcover' | 'paperback' | 'ebooks' | 'hardcover_dj') => void;
   getVariant: (id: string, defaultAmount: string) => ProductVariant;
   getPrice: (id: string, defaultAmount: string) => { amount: string; currencyCode: string };
 }
@@ -83,13 +83,13 @@ export function PreorderSection({
                 value="Hardcover-DJ"
                 className="data-active:bg-ink data-active:text-parchment rounded-none bg-cream-card w-full h-full py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
-                Hardcover (Dust Jacket) <span className="text-[10px] lowercase normal-case opacity-80">$40 / vol</span>
+                Hardcover (Dust Jacket) <span className="text-[10px] lowercase normal-case opacity-80">$35 / vol</span>
               </TabsTrigger>
               <TabsTrigger
                 value="Hardcover"
                 className="data-active:bg-ink data-active:text-parchment rounded-none bg-cream-card w-full h-full py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
-                Hardcover (No Jacket) <span className="text-[10px] lowercase normal-case opacity-80">$35 / vol</span>
+                Hardcover (No Jacket) <span className="text-[10px] lowercase normal-case opacity-80">$33 / vol</span>
               </TabsTrigger>
               <TabsTrigger
                 value="Paperback"
@@ -116,7 +116,7 @@ export function PreorderSection({
                 <strong className="text-rust font-semibold">Limited to this print run.</strong> Sewn legacy bindings are only available through this summer 2026 bulk order.
               </div>
               {PRODUCT_CONFIG.sewn.map(config => {
-                const variant = getVariant(config.id, '70.00');
+                const variant = getVariant(config.id, '50.00');
                 return (
                   <BookRow
                     key={config.id}
@@ -153,7 +153,7 @@ export function PreorderSection({
                 <strong>Want Volumes 1 & 6 sooner?</strong> Glued hardcover editions are <a href="#" className="text-moss font-medium underline">available now in our store</a>.
               </div>
               {PRODUCT_CONFIG.hardcover.map(config => {
-                const variant = getVariant(config.id, '40.00');
+                const variant = getVariant(config.id, '35.00');
                 return (
                   <BookRow
                     key={config.id}
@@ -187,7 +187,7 @@ export function PreorderSection({
                 <strong>Want Volumes 1 & 6 sooner?</strong> Glued hardcover editions are <a href="#" className="text-moss font-medium underline">available now in our store</a>.
               </div>
               {PRODUCT_CONFIG.hardcover_dj.map(config => {
-                const variant = getVariant(config.id, '40.00');
+                const variant = getVariant(config.id, '33.00');
                 return (
                   <BookRow
                     key={config.id}
@@ -209,7 +209,7 @@ export function PreorderSection({
               <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <Button
-                  onClick={() => addToCart('hardcover')}
+                  onClick={() => addToCart('hardcover_dj')}
                   className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
                 >
                   Add to Cart
