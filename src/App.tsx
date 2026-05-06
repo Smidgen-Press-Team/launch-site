@@ -88,6 +88,7 @@ export default function App() {
         addToCart={addToCart}
         getVariant={getVariant}
         getPrice={getPrice}
+        prices={prices}
       />
 
       <PerksSection />

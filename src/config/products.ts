@@ -190,6 +190,12 @@ export const PRICES_QUERY = `
     nodes(ids: $ids) {
       ... on Product {
         id
+        featuredImage {
+          url
+          altText
+          width
+          height
+        }
         variants(first: 1) {
           nodes {
             id
@@ -198,6 +204,12 @@ export const PRICES_QUERY = `
               currencyCode
             }
             availableForSale
+            image {
+              url
+              altText
+              width
+              height
+            }
           }
         }
       }

@@ -1,10 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import { createStorefrontClient } from '@shopify/hydrogen-react';
 import { ALL_PRODUCT_IDS, PRICES_QUERY } from '@/config/products';
-import type { ProductVariant } from '@/types/shopify';
+import type { ProductVariant, Image } from '@/types/shopify';
 
 interface ShopifyProductNode {
   id: string;
+  featuredImage?: Image;
   variants: {
     nodes: ProductVariant[];
   };
@@ -49,7 +50,12 @@ export function usePreorderPrices() {
           const priceMap: Record<string, ProductVariant> = {};
           data.nodes.forEach((node) => {
             if (node && node.variants && node.variants.nodes.length > 0) {
-              priceMap[node.id] = node.variants.nodes[0];
+              const variant = node.variants.nodes[0];
+              // Use product image if variant image is missing
+              if (!variant.image && node.featuredImage) {
+                variant.image = node.featuredImage;
+              }
+              priceMap[node.id] = variant;
             }
           });
           setPrices(priceMap);
