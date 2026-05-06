@@ -58,6 +58,8 @@ export default function App() {
         checkoutUrl={checkoutUrl}
         status={status}
         attributes={attributes}
+        acknowledgmentName={acknowledgmentName}
+        setAcknowledgmentName={setAcknowledgmentName}
       />
 
       <Hero
