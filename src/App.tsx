@@ -27,6 +27,8 @@ export default function App() {
   const {
     quantities,
     handleQtyChange,
+    selectedOptions,
+    handleOptionChange,
     acknowledgmentName,
     setAcknowledgmentName,
     selectedEbook,
@@ -79,6 +81,8 @@ export default function App() {
         setAcknowledgmentName={setAcknowledgmentName}
         quantities={quantities}
         onQtyChange={handleQtyChange}
+        selectedOptions={selectedOptions}
+        onOptionChange={handleOptionChange}
         selectedEbook={selectedEbook}
         setSelectedEbook={setSelectedEbook}
         addToCart={addToCart}

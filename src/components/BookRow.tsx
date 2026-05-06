@@ -1,5 +1,14 @@
 import { QuantityControl } from "./QuantityControl"
 import type { Product, ProductVariant } from "@/types/shopify"
+import type { ProductOption } from "@/config/products"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export interface BookRowProps {
   product: Product
@@ -7,6 +16,9 @@ export interface BookRowProps {
   note: string
   quantity: number
   onQuantityChange: (qty: number) => void
+  options?: ProductOption[]
+  selectedOptionId?: string
+  onOptionChange?: (id: string) => void
 }
 
 export function BookRow({ 
@@ -14,7 +26,10 @@ export function BookRow({
   variant, 
   note, 
   quantity, 
-  onQuantityChange
+  onQuantityChange,
+  options = [],
+  selectedOptionId,
+  onOptionChange
 }: BookRowProps) {
   if (!variant) return null
 
@@ -28,9 +43,31 @@ export function BookRow({
           <h3 className="font-serif text-xl font-medium leading-snug mb-1">
             {product.title}
           </h3>
-          <div className="text-[0.875rem] color-ink-muted italic leading-snug">
+          <div className="text-[0.875rem] color-ink-muted italic leading-snug mb-3">
             {note}
           </div>
+
+          {options.length > 1 && onOptionChange && selectedOptionId && (
+            <div className="max-w-[200px]">
+              <label className="block text-[10px] font-semibold tracking-wider uppercase text-ink-muted mb-1.5">
+                Cover Design
+              </label>
+              <Select value={selectedOptionId} onValueChange={onOptionChange}>
+                <SelectTrigger className="h-9 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {options.map((opt) => (
+                      <SelectItem key={opt.id} value={opt.id}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
         </div>
         <div className="font-serif text-2xl text-moss font-semibold whitespace-nowrap text-left sm:text-right">
           ${parseFloat(variant.price.amount).toFixed(0)}

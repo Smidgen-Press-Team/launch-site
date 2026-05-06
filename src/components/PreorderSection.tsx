@@ -10,6 +10,8 @@ interface PreorderSectionProps {
   setAcknowledgmentName: (name: string) => void;
   quantities: Record<string, number>;
   onQtyChange: (id: string, qty: number) => void;
+  selectedOptions: Record<string, string>;
+  onOptionChange: (volKey: string, productId: string) => void;
   selectedEbook: string;
   setSelectedEbook: (vol: string) => void;
   addToCart: (format: 'sewn' | 'hardcover' | 'paperback' | 'ebooks' | 'hardcover_dj') => void;
@@ -44,6 +46,8 @@ export function PreorderSection({
   setAcknowledgmentName,
   quantities,
   onQtyChange,
+  selectedOptions,
+  onOptionChange,
   selectedEbook,
   setSelectedEbook,
   addToCart,
@@ -115,23 +119,28 @@ export function PreorderSection({
               <div className="bg-[#fdf6f5] border-l-3 border-rust p-5 mb-6 rounded-[2px]">
                 <strong className="text-rust font-semibold">Limited to this print run.</strong> Sewn legacy bindings are only available through this summer 2026 bulk order.
               </div>
-              {PRODUCT_CONFIG.sewn.map(config => {
-                const variant = getVariant(config.id, '50.00');
+              {PRODUCT_CONFIG.sewn.map(book => {
+                const volKey = `sewn-${book.vol}`;
+                const selectedId = selectedOptions[volKey];
+                const variant = getVariant(selectedId, '50.00');
                 return (
                   <BookRow
-                    key={config.id}
+                    key={volKey}
                     product={{
-                      id: config.id,
-                      title: config.title,
-                      handle: `volume-${config.vol}`,
+                      id: selectedId,
+                      title: book.title,
+                      handle: `volume-${book.vol}`,
                       images: { nodes: [] },
                       variants: { nodes: [variant] },
-                      vol_number: { value: config.vol }
+                      vol_number: { value: book.vol }
                     }}
                     variant={variant}
-                    note={config.subtitle}
-                    quantity={quantities[config.id] || 0}
-                    onQuantityChange={(qty) => onQtyChange(config.id, qty)}
+                    note={book.subtitle}
+                    quantity={quantities[volKey] || 0}
+                    onQuantityChange={(qty) => onQtyChange(volKey, qty)}
+                    options={book.options}
+                    selectedOptionId={selectedId}
+                    onOptionChange={(id) => onOptionChange(volKey, id)}
                   />
                 );
               })}
@@ -152,23 +161,28 @@ export function PreorderSection({
               <div className="bg-cream-card border border-border-soft p-5 mb-6 rounded-[2px] text-sm">
                 <strong>Want Volumes 1 & 6 sooner?</strong> Glued hardcover editions are <a href="#" className="text-moss font-medium underline">available now in our store</a>.
               </div>
-              {PRODUCT_CONFIG.hardcover.map(config => {
-                const variant = getVariant(config.id, '35.00');
+              {PRODUCT_CONFIG.hardcover.map(book => {
+                const volKey = `hardcover-${book.vol}`;
+                const selectedId = selectedOptions[volKey];
+                const variant = getVariant(selectedId, '35.00');
                 return (
                   <BookRow
-                    key={config.id}
+                    key={volKey}
                     product={{
-                      id: config.id,
-                      title: config.title,
-                      handle: `volume-${config.vol}`,
+                      id: selectedId,
+                      title: book.title,
+                      handle: `volume-${book.vol}`,
                       images: { nodes: [] },
                       variants: { nodes: [variant] },
-                      vol_number: { value: config.vol }
+                      vol_number: { value: book.vol }
                     }}
                     variant={variant}
-                    note={config.subtitle}
-                    quantity={quantities[config.id] || 0}
-                    onQuantityChange={(qty) => onQtyChange(config.id, qty)}
+                    note={book.subtitle}
+                    quantity={quantities[volKey] || 0}
+                    onQuantityChange={(qty) => onQtyChange(volKey, qty)}
+                    options={book.options}
+                    selectedOptionId={selectedId}
+                    onOptionChange={(id) => onOptionChange(volKey, id)}
                   />
                 );
               })}
@@ -186,23 +200,28 @@ export function PreorderSection({
               <div className="bg-cream-card border border-border-soft p-5 mb-6 rounded-[2px] text-sm">
                 <strong>Want Volumes 1 & 6 sooner?</strong> Glued hardcover editions are <a href="#" className="text-moss font-medium underline">available now in our store</a>.
               </div>
-              {PRODUCT_CONFIG.hardcover_dj.map(config => {
-                const variant = getVariant(config.id, '33.00');
+              {PRODUCT_CONFIG.hardcover_dj.map(book => {
+                const volKey = `hardcover_dj-${book.vol}`;
+                const selectedId = selectedOptions[volKey];
+                const variant = getVariant(selectedId, '33.00');
                 return (
                   <BookRow
-                    key={config.id}
+                    key={volKey}
                     product={{
-                      id: config.id,
-                      title: config.title,
-                      handle: `volume-${config.vol}`,
+                      id: selectedId,
+                      title: book.title,
+                      handle: `volume-${book.vol}`,
                       images: { nodes: [] },
                       variants: { nodes: [variant] },
-                      vol_number: { value: config.vol }
+                      vol_number: { value: book.vol }
                     }}
                     variant={variant}
-                    note={config.subtitle}
-                    quantity={quantities[config.id] || 0}
-                    onQuantityChange={(qty) => onQtyChange(config.id, qty)}
+                    note={book.subtitle}
+                    quantity={quantities[volKey] || 0}
+                    onQuantityChange={(qty) => onQtyChange(volKey, qty)}
+                    options={book.options}
+                    selectedOptionId={selectedId}
+                    onOptionChange={(id) => onOptionChange(volKey, id)}
                   />
                 );
               })}
@@ -218,23 +237,28 @@ export function PreorderSection({
             </TabsContent>
 
             <TabsContent value="Paperback" className="space-y-0 mt-0">
-              {PRODUCT_CONFIG.paperback.map(config => {
-                const variant = getVariant(config.id, '20.00');
+              {PRODUCT_CONFIG.paperback.map(book => {
+                const volKey = `paperback-${book.vol}`;
+                const selectedId = selectedOptions[volKey];
+                const variant = getVariant(selectedId, '20.00');
                 return (
                   <BookRow
-                    key={config.id}
+                    key={volKey}
                     product={{
-                      id: config.id,
-                      title: config.title,
-                      handle: `volume-${config.vol}`,
+                      id: selectedId,
+                      title: book.title,
+                      handle: `volume-${book.vol}`,
                       images: { nodes: [] },
                       variants: { nodes: [variant] },
-                      vol_number: { value: config.vol }
+                      vol_number: { value: book.vol }
                     }}
                     variant={variant}
-                    note={config.subtitle}
-                    quantity={quantities[config.id] || 0}
-                    onQuantityChange={(qty) => onQtyChange(config.id, qty)}
+                    note={book.subtitle}
+                    quantity={quantities[volKey] || 0}
+                    onQuantityChange={(qty) => onQtyChange(volKey, qty)}
+                    options={book.options}
+                    selectedOptionId={selectedId}
+                    onOptionChange={(id) => onOptionChange(volKey, id)}
                   />
                 );
               })}
