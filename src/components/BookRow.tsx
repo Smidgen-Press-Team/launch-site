@@ -1,6 +1,3 @@
-import { QuantityControl } from "./QuantityControl"
-import type { Product, ProductVariant } from "@/types/shopify"
-import type { ProductOption } from "@/config/products"
 import {
   Select,
   SelectContent,
@@ -9,6 +6,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import type { ProductOption } from "@/config/products"
+import type { Product, ProductVariant } from "@/types/shopify"
+import { QuantityControl } from "./QuantityControl"
 
 export interface BookRowProps {
   product: Product
@@ -21,11 +21,11 @@ export interface BookRowProps {
   onOptionChange?: (id: string) => void
 }
 
-export function BookRow({ 
-  product, 
-  variant, 
-  note, 
-  quantity, 
+export function BookRow({
+  product,
+  variant,
+  note,
+  quantity,
   onQuantityChange,
   options = [],
   selectedOptionId,
@@ -54,7 +54,9 @@ export function BookRow({
               </label>
               <Select value={selectedOptionId} onValueChange={onOptionChange}>
                 <SelectTrigger className="h-9 text-xs">
-                  <SelectValue />
+                  <SelectValue placeholder="Cover Design">
+                    {options.find(opt => opt.id === selectedOptionId)?.label}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
