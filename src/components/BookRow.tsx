@@ -54,7 +54,7 @@ export function BookRow({
           </div>
 
           {options.length > 1 && onOptionChange && selectedOptionId && (
-            <div className="space-y-3 mt-2">
+            <div className="space-y-3 mt-2 w-50">
               <label className="block text-[10px] font-semibold tracking-wider uppercase text-ink-muted mb-2">
                 Choose Cover Design
               </label>
