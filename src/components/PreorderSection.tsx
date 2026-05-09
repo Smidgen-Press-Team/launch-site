@@ -17,6 +17,7 @@ interface PreorderSectionProps {
   addToCart: (format: 'sewn' | 'hardcover' | 'paperback' | 'ebooks' | 'hardcover_dj') => void;
   getVariant: (id: string, defaultAmount: string) => ProductVariant;
   getPrice: (id: string, defaultAmount: string) => { amount: string; currencyCode: string };
+  prices: Record<string, ProductVariant>;
 }
 interface NameInputProps {
   acknowledgmentName: string;
@@ -53,6 +54,7 @@ export function PreorderSection({
   addToCart,
   getVariant,
   getPrice,
+  prices,
 }: PreorderSectionProps) {
   const ebookDefaultPrices: Record<string, string> = {
     "2 & 3": "13.00",
@@ -141,6 +143,7 @@ export function PreorderSection({
                     options={book.options}
                     selectedOptionId={selectedId}
                     onOptionChange={(id) => onOptionChange(volKey, id)}
+                    prices={prices}
                   />
                 );
               })}
@@ -183,6 +186,7 @@ export function PreorderSection({
                     options={book.options}
                     selectedOptionId={selectedId}
                     onOptionChange={(id) => onOptionChange(volKey, id)}
+                    prices={prices}
                   />
                 );
               })}
@@ -222,6 +226,7 @@ export function PreorderSection({
                     options={book.options}
                     selectedOptionId={selectedId}
                     onOptionChange={(id) => onOptionChange(volKey, id)}
+                    prices={prices}
                   />
                 );
               })}
@@ -259,6 +264,7 @@ export function PreorderSection({
                     options={book.options}
                     selectedOptionId={selectedId}
                     onOptionChange={(id) => onOptionChange(volKey, id)}
+                    prices={prices}
                   />
                 );
               })}

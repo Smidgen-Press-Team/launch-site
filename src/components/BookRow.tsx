@@ -19,6 +19,7 @@ export interface BookRowProps {
   options?: ProductOption[]
   selectedOptionId?: string
   onOptionChange?: (id: string) => void
+  prices?: Record<string, ProductVariant>
 }
 
 export function BookRow({
@@ -29,9 +30,14 @@ export function BookRow({
   onQuantityChange,
   options = [],
   selectedOptionId,
-  onOptionChange
+  onOptionChange,
+  prices = {}
 }: BookRowProps) {
   if (!variant) return null
+
+  const displayedPrice = selectedOptionId && prices[selectedOptionId]
+    ? prices[selectedOptionId].price.amount
+    : variant.price.amount;
 
   return (
     <div className="flex flex-col border-b border-border-soft first:border-t">
@@ -43,14 +49,14 @@ export function BookRow({
           <h3 className="font-serif text-xl font-medium leading-snug mb-1">
             {product.title}
           </h3>
-          <div className="text-[0.875rem] color-ink-muted italic leading-snug mb-3">
+          <div className="text-[0.875rem] color-ink-muted italic leading-snug mb-4">
             {note}
           </div>
 
           {options.length > 1 && onOptionChange && selectedOptionId && (
-            <div className="max-w-[200px]">
-              <label className="block text-[10px] font-semibold tracking-wider uppercase text-ink-muted mb-1.5">
-                Cover Design
+            <div className="space-y-3 mt-2">
+              <label className="block text-[10px] font-semibold tracking-wider uppercase text-ink-muted mb-2">
+                Choose Cover Design
               </label>
               <Select value={selectedOptionId} onValueChange={onOptionChange}>
                 <SelectTrigger className="h-9 text-xs">
@@ -71,11 +77,13 @@ export function BookRow({
             </div>
           )}
         </div>
-        <div className="font-serif text-2xl text-moss font-semibold whitespace-nowrap text-left sm:text-right">
-          ${parseFloat(variant.price.amount).toFixed(0)}
-        </div>
-        <div className="flex justify-end sm:justify-start">
+        <div className="flex justify-end sm:justify-start gap-4">
+          <div className="font-serif text-2xl text-moss font-semibold whitespace-nowrap text-left sm:text-right">
+            ${parseFloat(displayedPrice).toFixed(0)}
+          </div>
+
           <QuantityControl value={quantity} onChange={onQuantityChange} />
+
         </div>
       </div>
     </div>

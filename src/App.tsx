@@ -58,6 +58,8 @@ export default function App() {
         checkoutUrl={checkoutUrl}
         status={status}
         attributes={attributes}
+        acknowledgmentName={acknowledgmentName}
+        setAcknowledgmentName={setAcknowledgmentName}
       />
 
       <Hero
@@ -88,6 +90,7 @@ export default function App() {
         addToCart={addToCart}
         getVariant={getVariant}
         getPrice={getPrice}
+        prices={prices}
       />
 
       <PerksSection />
