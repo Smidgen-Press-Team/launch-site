@@ -1,7 +1,7 @@
 import { QuantityControl } from "@/components/QuantityControl";
 import { Button } from "@/components/ui/button";
 import { TITLE_CONFIG } from "@/config/products";
-import type { CartLine } from '@/types/shopify';
+import type { CartLine, ShopifyAttribute } from '@/types/shopify';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -11,7 +11,7 @@ interface CartDrawerProps {
   linesUpdate: (lines: { id: string; quantity: number }[]) => void;
   checkoutUrl?: string;
   status: string;
-  attributes?: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  attributes?: ShopifyAttribute[];
   acknowledgmentName?: string;
   setAcknowledgmentName?: (name: string) => void;
 }
