@@ -53,15 +53,15 @@ export function BookRow({
             {note}
           </div>
 
-          {options.length > 1 && onOptionChange && selectedOptionId && (
+          {options.length > 1 && onOptionChange && (
             <div className="space-y-3 mt-2 w-50">
               <label className="block text-[10px] font-semibold tracking-wider uppercase text-ink-muted mb-2">
                 Choose Cover Design
               </label>
-              <Select value={selectedOptionId} onValueChange={onOptionChange}>
-                <SelectTrigger className="h-9 text-xs">
-                  <SelectValue placeholder="Cover Design">
-                    {options.find(opt => opt.id === selectedOptionId)?.label}
+              <Select value={selectedOptionId || ""} onValueChange={onOptionChange}>
+                <SelectTrigger className={`h-9 text-xs ${!selectedOptionId ? "border-rust/50 text-rust" : ""}`}>
+                  <SelectValue placeholder="Select Design">
+                    {selectedOptionId ? options.find(opt => opt.id === selectedOptionId)?.label : "Select Design"}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
@@ -74,6 +74,9 @@ export function BookRow({
                   </SelectGroup>
                 </SelectContent>
               </Select>
+              {!selectedOptionId && quantity > 0 && (
+                <p className="text-[10px] text-rust font-medium italic mt-1">Please select a cover design</p>
+              )}
             </div>
           )}
         </div>

@@ -62,6 +62,19 @@ export function PreorderSection({
     "1, 2, 3, & 6": "20.00",
   };
 
+  const isFormatMissingSelection = (format: keyof typeof PRODUCT_CONFIG) => {
+    if (format === 'ebooks') return !selectedEbook;
+    return PRODUCT_CONFIG[format].some(book => {
+      const volKey = `${format}-${book.vol}`;
+      const qty = quantities[volKey] || 0;
+      return qty > 0 && !selectedOptions[volKey];
+    });
+  };
+
+  const hasItemsInFormat = (format: keyof typeof PRODUCT_CONFIG) => {
+    if (format === 'ebooks') return !!selectedEbook;
+    return PRODUCT_CONFIG[format].some(book => quantities[`${format}-${book.vol}`] > 0);
+  };
 
   return (
     <section className="py-16 px-6 max-w-[60rem] mx-auto">
@@ -152,7 +165,10 @@ export function PreorderSection({
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <Button
                   onClick={() => addToCart('sewn')}
-                  className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  disabled={hasItemsInFormat('sewn') && isFormatMissingSelection('sewn')}
+                  className={`bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium transition-all ${
+                    hasItemsInFormat('sewn') && isFormatMissingSelection('sewn') ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
                 >
                   Add to Cart
                 </Button>
@@ -194,7 +210,10 @@ export function PreorderSection({
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <Button
                   onClick={() => addToCart('hardcover')}
-                  className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  disabled={hasItemsInFormat('hardcover') && isFormatMissingSelection('hardcover')}
+                  className={`bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium transition-all ${
+                    hasItemsInFormat('hardcover') && isFormatMissingSelection('hardcover') ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
                 >
                   Add to Cart
                 </Button>
@@ -234,7 +253,10 @@ export function PreorderSection({
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <Button
                   onClick={() => addToCart('hardcover_dj')}
-                  className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  disabled={hasItemsInFormat('hardcover_dj') && isFormatMissingSelection('hardcover_dj')}
+                  className={`bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium transition-all ${
+                    hasItemsInFormat('hardcover_dj') && isFormatMissingSelection('hardcover_dj') ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
                 >
                   Add to Cart
                 </Button>
@@ -272,7 +294,10 @@ export function PreorderSection({
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <Button
                   onClick={() => addToCart('paperback')}
-                  className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  disabled={hasItemsInFormat('paperback') && isFormatMissingSelection('paperback')}
+                  className={`bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium transition-all ${
+                    hasItemsInFormat('paperback') && isFormatMissingSelection('paperback') ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
                 >
                   Add to Cart
                 </Button>

@@ -14,7 +14,12 @@ export function usePreorderCart(prices: Record<string, ProductVariant>) {
     const initial: Record<string, string> = {};
     (['sewn', 'hardcover', 'hardcover_dj', 'paperback'] as const).forEach(format => {
       PRODUCT_CONFIG[format].forEach(book => {
-        initial[`${format}-${book.vol}`] = book.options[0].id;
+        // Only pre-select if there is exactly one option
+        if (book.options.length === 1) {
+          initial[`${format}-${book.vol}`] = book.options[0].id;
+        } else {
+          initial[`${format}-${book.vol}`] = "";
+        }
       });
     });
     return initial;
@@ -81,13 +86,18 @@ export function usePreorderCart(prices: Record<string, ProductVariant>) {
           console.warn("No valid variant found for ebook:", selectedEbook);
         }
       } else {
+        let missingSelection = false;
         PRODUCT_CONFIG[format].forEach((book) => {
           const volKey = `${format}-${book.vol}`;
           const qty = quantities[volKey] || 0;
           const selectedProductId = selectedOptions[volKey];
-          const variant = prices[selectedProductId];
-
+          
           if (qty > 0) {
+            if (!selectedProductId) {
+              missingSelection = true;
+              return;
+            }
+            const variant = prices[selectedProductId];
             if (variant && !variant.id.startsWith("fallback-")) {
               linesToUpdate.push({
                 merchandiseId: variant.id,
@@ -98,6 +108,11 @@ export function usePreorderCart(prices: Record<string, ProductVariant>) {
             }
           }
         });
+
+        if (missingSelection) {
+          alert("Please select a cover design for all selected books.");
+          return;
+        }
       }
 
       if (linesToUpdate.length > 0) {
