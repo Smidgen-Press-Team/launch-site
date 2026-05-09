@@ -1,7 +1,7 @@
 import { QuantityControl } from "@/components/QuantityControl";
 import { Button } from "@/components/ui/button";
 import { TITLE_CONFIG } from "@/config/products";
-import type { CartLine, ShopifyAttribute } from '@/types/shopify';
+import type { CartLine } from '@/types/shopify';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -11,7 +11,7 @@ interface CartDrawerProps {
   linesUpdate: (lines: { id: string; quantity: number }[]) => void;
   checkoutUrl?: string;
   status: string;
-  attributes?: ShopifyAttribute[];
+  attributes?: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   acknowledgmentName?: string;
   setAcknowledgmentName?: (name: string) => void;
 }
@@ -96,10 +96,10 @@ export function CartDrawer({
               {attributes && attributes.length > 0 && (
                 <div className="mt-4 p-4 bg-cream-card border border-border-soft rounded-[2px]">
                   <h3 className="text-xs font-semibold tracking-wider uppercase text-ink-muted mb-2">Order Attributes</h3>
-                  {attributes.map((attr) => {
-                    if (!attr) return null;
+                  {attributes.map((attr, idx) => {
+                    if (!attr || !attr.key) return null;
                     return (
-                      <p key={attr.key} className="text-sm italic text-moss">
+                      <p key={attr.key || idx} className="text-sm italic text-moss">
                         {attr.key}: <span className="font-medium">{attr.value}</span>
                       </p>
                     );
