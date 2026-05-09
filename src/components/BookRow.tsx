@@ -1,4 +1,11 @@
-import { Radio, RadioGroup, RadioIndicator } from "@/components/ui/radio-group"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import type { ProductOption } from "@/config/products"
 import type { Product, ProductVariant } from "@/types/shopify"
 import { QuantityControl } from "./QuantityControl"
@@ -51,31 +58,22 @@ export function BookRow({
               <label className="block text-[10px] font-semibold tracking-wider uppercase text-ink-muted mb-2">
                 Choose Cover Design
               </label>
-              <RadioGroup value={selectedOptionId} onValueChange={onOptionChange} className="grid grid-cols-1 gap-3 max-w-[500px]">
-                {options.map((opt) => {
-                  const optVariant = prices[opt.id]
-                  const imageUrl = optVariant?.image?.url
-
-                  return (
-                    <Radio key={opt.id} value={opt.id} className="min-h-30">
-                      {imageUrl && (
-                        <div className="h-30 w-30 border-r border-border-soft overflow-hidden bg-white flex items-center justify-center">
-                          <img
-                            src={imageUrl}
-                            alt={opt.label}
-                            className="h-full w-full object-contain grayscale-[0.2] group-data-[state=checked]:grayscale-0 transition-all"
-                          />
-                        </div>
-                      )}
-                      <div className="flex items-center gap-4 p-4 flex-1 justify-between">
-                        <span className="text-sm font-medium">{opt.label}</span>
-                        <RadioIndicator />
-                      </div>
-                    </Radio>
-                  )
-                })}
-              </RadioGroup>
-
+              <Select value={selectedOptionId} onValueChange={onOptionChange}>
+                <SelectTrigger className="h-9 text-xs">
+                  <SelectValue placeholder="Cover Design">
+                    {options.find(opt => opt.id === selectedOptionId)?.label}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {options.map((opt) => (
+                      <SelectItem key={opt.id} value={opt.id}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           )}
         </div>
