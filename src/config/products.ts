@@ -34,7 +34,7 @@ export const PRODUCT_CONFIG: {
       subtitle: "Sewn binding · Ships summer 2026",
       options: [
         { id: "gid://shopify/Product/10522072514838", label: "Filigree" },
-        { id: "gid://shopify/Products/10502200819990", label: "Typography" },
+        { id: "gid://shopify/Product/10502200819990", label: "Typography" },
       ],
     },
     {
@@ -43,7 +43,7 @@ export const PRODUCT_CONFIG: {
       subtitle: "Sewn binding · Ships summer 2026",
       options: [
         { id: "gid://shopify/Product/10522074284310", label: "Filigree" },
-        { id: "gid//shopify/Products/10502202523926", label: "Typography" },
+        { id: "gid://shopify/Product/10502202523926", label: "Typography" },
       ],
     },
     {
@@ -163,11 +163,11 @@ export const TITLE_CONFIG: Record<string, string> = {
     "Home Education - Sewn binding (Typography)",
   "gid://shopify/Product/10522072514838":
     "Parents and Children - Sewn binding (Filigree)",
-  "gid://shopify/Products/10502200819990":
+  "gid://shopify/Product/10502200819990":
     "Parents and Children - Sewn binding (Typography)",
   "gid://shopify/Product/10522074284310":
     "School Education - Sewn binding (Filigree)",
-  "gid//shopify/Products/10502202523926":
+  "gid://shopify/Product/10502202523926":
     "School Education - Sewn binding (Typography)",
   "gid://shopify/Product/10522076021014":
     "Philosophy of Education - Sewn binding (Filigree)",
