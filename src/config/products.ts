@@ -32,19 +32,28 @@ export const PRODUCT_CONFIG: {
       vol: "2",
       title: "Parents and Children",
       subtitle: "Sewn binding · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10502200819990", label: "Filigree" }],
+      options: [
+        { id: "gid://shopify/Product/10522072514838", label: "Filigree" },
+        { id: "gid://shopify/Products/10502200819990", label: "Typography" },
+      ],
     },
     {
       vol: "3",
       title: "School Education",
       subtitle: "Sewn binding · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10502202523926", label: "Filigree" }],
+      options: [
+        { id: "gid://shopify/Product/10522074284310", label: "Filigree" },
+        { id: "gid//shopify/Products/10502202523926", label: "Typography" },
+      ],
     },
     {
       vol: "6",
       title: "Philosophy of Education",
       subtitle: "Sewn binding · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10502203015446", label: "Filigree" }],
+      options: [
+        { id: "gid://shopify/Product/10522076021014", label: "Filigree" },
+        { id: "gid://shopify/Product/10502203015446", label: "Typography" },
+      ],
     },
   ],
   hardcover: [
@@ -52,25 +61,25 @@ export const PRODUCT_CONFIG: {
       vol: "1",
       title: "Home Education",
       subtitle: "Glued hardcover (No Dust Jacket) · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10502373376278", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10502373376278", label: "" }],
     },
     {
       vol: "2",
       title: "Parents and Children",
       subtitle: "Glued hardcover (No Dust Jacket) · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10502377537814", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10502377537814", label: "" }],
     },
     {
       vol: "6",
       title: "Philosophy of Education",
       subtitle: "Glued hardcover (No Dust Jacket) · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10504612938006", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10504612938006", label: "" }],
     },
     {
       vol: "3",
       title: "School Education",
       subtitle: "Glued hardcover (No Dust Jacket) · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10504611528982", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10504611528982", label: "" }],
     },
   ],
   hardcover_dj: [
@@ -78,25 +87,25 @@ export const PRODUCT_CONFIG: {
       vol: "1",
       title: "Home Education",
       subtitle: "Glued hardcover with Dust Jacket · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10502203212054", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10502203212054", label: "" }],
     },
     {
       vol: "2",
       title: "Parents and Children",
       subtitle: "Glued hardcover with Dust Jacket · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10502350962966", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10502350962966", label: "" }],
     },
     {
       vol: "3",
       title: "School Education",
       subtitle: "Glued hardcover with Dust Jacket · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10504417345814", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10504417345814", label: "" }],
     },
     {
       vol: "6",
       title: "Philosophy of Education",
       subtitle: "Glued hardcover with Dust Jacket · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10504419541270", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10504419541270", label: "" }],
     },
   ],
   paperback: [
@@ -104,25 +113,25 @@ export const PRODUCT_CONFIG: {
       vol: "1",
       title: "Home Education",
       subtitle: "Paperback · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10502342607126", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10502342607126", label: "" }],
     },
     {
       vol: "2",
       title: "Parents and Children",
       subtitle: "Paperback · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10502354698518", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10502354698518", label: "" }],
     },
     {
       vol: "3",
       title: "School Education",
       subtitle: "Paperback · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10504614183190", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10504614183190", label: "" }],
     },
     {
       vol: "6",
       title: "Philosophy of Education",
       subtitle: "Paperback · Ships summer 2026",
-      options: [{ id: "gid://shopify/Product/10504617722134", label: "Filigree" }],
+      options: [{ id: "gid://shopify/Product/10504617722134", label: "" }],
     },
   ],
   ebooks: [
@@ -148,10 +157,20 @@ export const PRODUCT_CONFIG: {
 };
 
 export const TITLE_CONFIG: Record<string, string> = {
-  "gid://shopify/Product/10502195380502": "Home Education - Sewn binding (Filigree)",
-  "gid://shopify/Product/10514334056726": "Home Education - Sewn binding (Typography)",
-  "gid://shopify/Product/10502200819990": "Parents and Children - Sewn binding",
-  "gid://shopify/Product/10502202523926": "School Education - Sewn binding",
+  "gid://shopify/Product/10502195380502":
+    "Home Education - Sewn binding (Filigree)",
+  "gid://shopify/Product/10514334056726":
+    "Home Education - Sewn binding (Typography)",
+  "gid://shopify/Product/10522072514838":
+    "Parents and Children - Sewn binding (Filigree)",
+  "gid://shopify/Products/10502200819990":
+    "Parents and Children - Sewn binding (Typography)",
+  "gid://shopify/Product/10522074284310":
+    "School Education - Sewn binding (Filigree)",
+  "gid//shopify/Products/10502202523926":
+    "School Education - Sewn binding (Typography)",
+  "gid://shopify/Product/10522076021014":
+    "Philosophy of Education - Sewn binding (Filigree)",
   "gid://shopify/Product/10502203015446":
     "Philosophy of Education - Sewn binding",
   "gid://shopify/Product/10502203212054":
@@ -171,8 +190,10 @@ export const TITLE_CONFIG: Record<string, string> = {
     "School Education - Hardcover with Dust Jacket",
   "gid://shopify/Product/10504419541270":
     "Philosophy of Education - Hardcover with Dust Jacket",
-  "gid://shopify/Product/10504612938006": "Philosophy of Education - Hardcover (No Dust Jacket)",
-  "gid://shopify/Product/10504611528982": "School Education - Hardcover (No Dust Jacket)",
+  "gid://shopify/Product/10504612938006":
+    "Philosophy of Education - Hardcover (No Dust Jacket)",
+  "gid://shopify/Product/10504611528982":
+    "School Education - Hardcover (No Dust Jacket)",
   "gid://shopify/Product/10504614183190": "School Education - Paperback",
   "gid://shopify/Product/10504617722134": "Philosophy of Education - Paperback",
 };
