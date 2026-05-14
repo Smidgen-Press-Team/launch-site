@@ -303,7 +303,7 @@ export function PreorderSection({
 
             <TabsContent value="Kindle/EPUB" className="space-y-0 mt-0">
               <div className="bg-cream-card border border-border-soft p-6 mb-6 rounded-[2px]">
-                <h4 className="font-serif text-lg font-medium mb-2">Kindle & EPUB — New Volumes</h4>
+                <h4 className="font-serif text-lg font-medium mb-2">EPUB & PDF — New Volumes</h4>
                 <p className="text-sm text-ink-muted mb-4">Choose an ebook bundle below.</p>
                 <div className="flex flex-wrap gap-3">
                   {PRODUCT_CONFIG.ebooks.map((ebook) => (
