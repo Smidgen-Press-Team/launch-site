@@ -50,6 +50,7 @@
   --color-parchment: #f0e6d4;
   --color-parchment-muted: #d8cfb8;
   --color-warm-mid: #e8e2d8;
+  --color-warm-darker: #d3cfc7;
   --color-gold: #8a6f30;
   --color-gold-accent: #b8923e;
   --color-gold-light: #e8d0a0;
@@ -59,6 +60,7 @@
   --color-cream-card: #faf7f2;
   --color-border-custom: #9e8e78;
   --color-border-soft: #c8bba8;
+  --color-mid-soft: #fbf4e7;
 
   --font-cormorant: "Cormorant Garamond", serif;
   --font-jost: "Jost", sans-serif;

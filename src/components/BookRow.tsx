@@ -49,7 +49,7 @@ export function BookRow({
           <h3 className="font-serif text-xl font-medium leading-snug mb-1">
             {product.title}
           </h3>
-          <div className="text-[0.875rem] color-ink-muted italic leading-snug mb-4">
+          <div className="text-[16px] color-ink-muted italic leading-snug mb-4">
             {note}
           </div>
 
@@ -59,7 +59,7 @@ export function BookRow({
                 Choose Cover Design
               </label>
               <Select value={selectedOptionId || ""} onValueChange={onOptionChange}>
-                <SelectTrigger className={`h-9 text-xs ${!selectedOptionId ? "border-rust/50 text-rust" : ""}`}>
+                <SelectTrigger className={`h-9 text-sm ${!selectedOptionId ? "border-rust/50 text-rust" : ""}`}>
                   <SelectValue placeholder="Select Design">
                     {selectedOptionId ? options.find(opt => opt.id === selectedOptionId)?.label : "Select Design"}
                   </SelectValue>

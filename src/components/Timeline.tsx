@@ -10,7 +10,7 @@ function TimelineItem({ year, vols, titles, status, variant }: TimelineItemProps
   const statusColors = {
     complete: 'bg-moss text-white',
     current: 'bg-gold text-white',
-    future: 'bg-warm-mid text-ink-muted'
+    future: 'bg-warm-darker text-ink-muted'
   }
 
   const dotColors = {
@@ -45,28 +45,28 @@ function Connector() {
 export function Timeline() {
   return (
     <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-0">
-      <TimelineItem 
-        year="2025" 
-        vols="Volumes 1 & 6" 
-        titles="Home Education & Philosophy of Education" 
-        status="Launched ✓" 
-        variant="complete" 
+      <TimelineItem
+        year="2025"
+        vols="Volumes 1 & 6"
+        titles="Home Education & Philosophy of Education"
+        status="Launched ✓"
+        variant="complete"
       />
       <Connector />
-      <TimelineItem 
-        year="2026" 
-        vols="Volumes 2 & 3" 
-        titles="Parents and Children & School Education" 
-        status="Preorder Open Now" 
-        variant="current" 
+      <TimelineItem
+        year="2026"
+        vols="Volumes 2 & 3"
+        titles="Parents and Children & School Education"
+        status="Preorder Open Now"
+        variant="current"
       />
       <Connector />
-      <TimelineItem 
-        year="2027" 
-        vols="Volumes 4 & 5" 
-        titles="Ourselves & Formation of Character" 
-        status="Coming 2027" 
-        variant="future" 
+      <TimelineItem
+        year="2027"
+        vols="Volumes 4 & 5"
+        titles="Ourselves & Formation of Character"
+        status="Coming 2027"
+        variant="future"
       />
     </div>
   )

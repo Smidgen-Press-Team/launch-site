@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useCart } from '@shopify/hydrogen-react';
-import { Timeline } from "@/components/Timeline";
 import { CartDrawer } from "@/components/CartDrawer";
-import { Hero } from "@/components/Hero";
 import { DeadlineBanner } from "@/components/DeadlineBanner";
-import { PreorderSection } from "@/components/PreorderSection";
-import { PerksSection } from "@/components/PerksSection";
 import { Footer } from "@/components/Footer";
-import { usePreorderPrices } from '@/hooks/usePreorderPrices';
+import { Hero } from "@/components/Hero";
+import { PerksSection } from "@/components/PerksSection";
+import { PreorderSection } from "@/components/PreorderSection";
+import { Timeline } from "@/components/Timeline";
 import { usePreorderCart } from '@/hooks/usePreorderCart';
+import { usePreorderPrices } from '@/hooks/usePreorderPrices';
+import { useCart } from '@shopify/hydrogen-react';
+import { useEffect, useState } from 'react';
+import { FAQs } from "./components/FAQ";
 
 export default function App() {
   const {
@@ -76,24 +77,26 @@ export default function App() {
           <Timeline />
         </div>
       </section>
-
-      <PreorderSection
-        isLoading={isLoading}
-        acknowledgmentName={acknowledgmentName}
-        setAcknowledgmentName={setAcknowledgmentName}
-        quantities={quantities}
-        onQtyChange={handleQtyChange}
-        selectedOptions={selectedOptions}
-        onOptionChange={handleOptionChange}
-        selectedEbook={selectedEbook}
-        setSelectedEbook={setSelectedEbook}
-        addToCart={addToCart}
-        getVariant={getVariant}
-        getPrice={getPrice}
-        prices={prices}
-      />
+      <div className="w-full m-auto bg-mid-soft">
+        <PreorderSection
+          isLoading={isLoading}
+          acknowledgmentName={acknowledgmentName}
+          setAcknowledgmentName={setAcknowledgmentName}
+          quantities={quantities}
+          onQtyChange={handleQtyChange}
+          selectedOptions={selectedOptions}
+          onOptionChange={handleOptionChange}
+          selectedEbook={selectedEbook}
+          setSelectedEbook={setSelectedEbook}
+          addToCart={addToCart}
+          getVariant={getVariant}
+          getPrice={getPrice}
+          prices={prices}
+        />
+      </div>
 
       <PerksSection />
+      <FAQs></FAQs>
 
       <Footer />
     </div>
