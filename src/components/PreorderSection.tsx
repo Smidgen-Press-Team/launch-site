@@ -95,13 +95,13 @@ export function PreorderSection({
                 value="Sewn"
                 className="data-active:bg-ink data-active:text-parchment rounded-none bg-cream-card w-full h-full py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
-                Premium hardcover <span className="text-[10px] lowercase normal-case opacity-80">$50 / vol</span>
+                Premium hardcover <span className="text-[10px] lowercase normal-case opacity-80">$55 / vol</span>
               </TabsTrigger>
               <TabsTrigger
                 value="Hardcover-DJ"
                 className="data-active:bg-ink data-active:text-parchment rounded-none bg-cream-card w-full h-full py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
-                Standard hardcover <span className="text-[10px] lowercase normal-case opacity-80">$35 / vol</span>
+                Standard hardcover <span className="text-[10px] lowercase normal-case opacity-80">$40 / vol</span>
               </TabsTrigger>
               {/*<TabsTrigger
                 value="Hardcover"
@@ -113,7 +113,7 @@ export function PreorderSection({
                 value="Paperback"
                 className="data-active:bg-ink data-active:text-parchment rounded-none bg-cream-card w-full h-full py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
-                Paperback <span className="text-[10px] lowercase normal-case opacity-80">$20 / vol</span>
+                Paperback <span className="text-[10px] lowercase normal-case opacity-80">$25 / vol</span>
               </TabsTrigger>
               <TabsTrigger
                 value="Kindle/EPUB"
@@ -136,7 +136,7 @@ export function PreorderSection({
               {PRODUCT_CONFIG.sewn.map(book => {
                 const volKey = `sewn-${book.vol}`;
                 const selectedId = selectedOptions[volKey];
-                const variant = getVariant(selectedId, '50.00');
+                const variant = getVariant(selectedId, '55.00');
                 return (
                   <BookRow
                     key={volKey}
@@ -222,7 +222,7 @@ export function PreorderSection({
               {PRODUCT_CONFIG.hardcover_dj.map(book => {
                 const volKey = `hardcover_dj-${book.vol}`;
                 const selectedId = selectedOptions[volKey];
-                const variant = getVariant(selectedId, '33.00');
+                const variant = getVariant(selectedId, '35.00');
                 return (
                   <BookRow
                     key={volKey}
@@ -265,7 +265,7 @@ export function PreorderSection({
               {PRODUCT_CONFIG.paperback.map(book => {
                 const volKey = `paperback-${book.vol}`;
                 const selectedId = selectedOptions[volKey];
-                const variant = getVariant(selectedId, '20.00');
+                const variant = getVariant(selectedId, '25.00');
                 return (
                   <BookRow
                     key={volKey}

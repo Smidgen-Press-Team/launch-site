@@ -49,7 +49,7 @@ export function BookRow({
           <h3 className="font-serif text-xl font-medium leading-snug mb-1">
             {product.title}
           </h3>
-          <div className="text-[16px] color-ink-muted italic leading-snug mb-4">
+          <div className="text-[15px] color-ink-muted italic leading-snug mb-4">
             {note}
           </div>
 

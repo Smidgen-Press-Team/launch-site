@@ -1,3 +1,5 @@
+import features from "@/assets/features.png";
+import mockup from "@/assets/mockup.png";
 import { CartDrawer } from "@/components/CartDrawer";
 import { DeadlineBanner } from "@/components/DeadlineBanner";
 import { Footer } from "@/components/Footer";
@@ -67,15 +69,19 @@ export default function App() {
         totalQuantity={totalQuantity || 0}
         onOpenCart={() => setIsCartOpen(true)}
       />
+      <img src={mockup} />
 
       <DeadlineBanner />
 
-      <section className="bg-cream-card border-b border-border-soft py-14 px-6">
+      <section className="bg-cream-card md:border-b border-border-soft py-14 px-6">
         <div className="max-w-[60rem] mx-auto">
           <div className="section-subtitle mb-2">The complete works of Charlotte Mason</div>
           <h2 className="font-serif text-[1.875rem] font-medium leading-tight mb-8">A Six-Volume Journey</h2>
           <Timeline />
         </div>
+      </section>
+      <section>
+        <img className="m-auto items-center md:p-20" src={features} />
       </section>
       <div className="w-full m-auto bg-mid-soft">
         <PreorderSection

@@ -22,7 +22,8 @@ export const PRODUCT_CONFIG: {
     {
       vol: "1",
       title: "Home Education",
-      subtitle: "Ships October 2026",
+      subtitle:
+        "Sewn binding with dust jacket. Ships October 2026. EPUB and PDF included free",
       options: [
         { id: "gid://shopify/Product/10502195380502", label: "Filigree" },
         { id: "gid://shopify/Product/10514334056726", label: "Typography" },
@@ -31,7 +32,8 @@ export const PRODUCT_CONFIG: {
     {
       vol: "2",
       title: "Parents and Children",
-      subtitle: "Ships October 2026",
+      subtitle:
+        "Sewn binding with dust jacket. Ships October 2026. EPUB and PDF included free",
       options: [
         { id: "gid://shopify/Product/10522072514838", label: "Filigree" },
         { id: "gid://shopify/Product/10502200819990", label: "Typography" },
@@ -40,7 +42,8 @@ export const PRODUCT_CONFIG: {
     {
       vol: "3",
       title: "School Education",
-      subtitle: "Ships October 2026",
+      subtitle:
+        "Sewn binding with dust jacket. Ships October 2026. EPUB and PDF included free",
       options: [
         { id: "gid://shopify/Product/10522074284310", label: "Filigree" },
         { id: "gid://shopify/Product/10502202523926", label: "Typography" },
@@ -49,7 +52,8 @@ export const PRODUCT_CONFIG: {
     {
       vol: "6",
       title: "Philosophy of Education",
-      subtitle: "Ships October 2026",
+      subtitle:
+        "Sewn binding with dust jacket. Ships October 2026. EPUB and PDF included free",
       options: [
         { id: "gid://shopify/Product/10522076021014", label: "Filigree" },
         { id: "gid://shopify/Product/10502203015446", label: "Typography" },
@@ -86,25 +90,29 @@ export const PRODUCT_CONFIG: {
     {
       vol: "1",
       title: "Home Education",
-      subtitle: "Glued hardcover with Dust Jacket · Ships summer 2026",
+      subtitle:
+        "Glued binding with dust jacket. Ships July 2026. EPUB and PDF included free.",
       options: [{ id: "gid://shopify/Product/10502203212054", label: "" }],
     },
     {
       vol: "2",
       title: "Parents and Children",
-      subtitle: "Glued hardcover with Dust Jacket · Ships summer 2026",
+      subtitle:
+        "Glued binding with dust jacket. Ships July 2026. EPUB and PDF included free.",
       options: [{ id: "gid://shopify/Product/10502350962966", label: "" }],
     },
     {
       vol: "3",
       title: "School Education",
-      subtitle: "Glued hardcover with Dust Jacket · Ships summer 2026",
+      subtitle:
+        "Glued binding with dust jacket. Ships July 2026. EPUB and PDF included free.",
       options: [{ id: "gid://shopify/Product/10504417345814", label: "" }],
     },
     {
       vol: "6",
       title: "Philosophy of Education",
-      subtitle: "Glued hardcover with Dust Jacket · Ships summer 2026",
+      subtitle:
+        "Glued binding with dust jacket. Ships July 2026. EPUB and PDF included free.",
       options: [{ id: "gid://shopify/Product/10504419541270", label: "" }],
     },
   ],
@@ -112,25 +120,25 @@ export const PRODUCT_CONFIG: {
     {
       vol: "1",
       title: "Home Education",
-      subtitle: "Paperback · Ships summer 2026",
+      subtitle: "Ships July 2026. EPUB and PDF included free.",
       options: [{ id: "gid://shopify/Product/10502342607126", label: "" }],
     },
     {
       vol: "2",
       title: "Parents and Children",
-      subtitle: "Paperback · Ships summer 2026",
+      subtitle: "Ships July 2026. EPUB and PDF included free.",
       options: [{ id: "gid://shopify/Product/10502354698518", label: "" }],
     },
     {
       vol: "3",
       title: "School Education",
-      subtitle: "Paperback · Ships summer 2026",
+      subtitle: "Ships July 2026. EPUB and PDF included free.",
       options: [{ id: "gid://shopify/Product/10504614183190", label: "" }],
     },
     {
       vol: "6",
       title: "Philosophy of Education",
-      subtitle: "Paperback · Ships summer 2026",
+      subtitle: "Ships July 2026. EPUB and PDF included free.",
       options: [{ id: "gid://shopify/Product/10504617722134", label: "" }],
     },
   ],

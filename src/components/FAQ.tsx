@@ -6,10 +6,10 @@ import {
 } from "@/components/ui/accordion"
 
 export const FAQs = () => (
-    <div className="max-w-[60rem] m-auto py-6 border-b border-border-soft animate-in fade-in slide-in-from-top-2 duration-300">
+    <div className="max-w-[800px] m-auto py-6 border-b border-border-soft animate-in fade-in slide-in-from-top-2 duration-300">
         <div className="section-subtitle">FAQS</div>
         <h2 className="font-serif text-[1.875rem] font-medium leading-tight mb-2">Questions?</h2>
-        <Accordion>
+        <Accordion className="text-[18px]">
             <AccordionItem>
                 <AccordionTrigger>How long is this book preorder open?</AccordionTrigger>
                 <AccordionContent>
@@ -29,7 +29,7 @@ export const FAQs = () => (
             </AccordionItem>
             <AccordionItem>
                 <AccordionTrigger>Are these editions original and unabridged?</AccordionTrigger>
-                <AccordionContent>Yes, we are using Charlotte Mason’s original books’ text from the early 1900s, and we even have bonus content by Mason herself in each book. Read more here.
+                <AccordionContent>Yes, we are using Charlotte Mason’s original books’ text from the early 1900s, and we even have bonus content by Mason herself in each book. <a href="https://smidgenpress.com/home-education-series-faqs" target="_blank">Read more here.</a>
                 </AccordionContent>
             </AccordionItem>
             <AccordionItem>
