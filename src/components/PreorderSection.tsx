@@ -26,7 +26,7 @@ interface NameInputProps {
 
 const NameInput = ({ acknowledgmentName,
   setAcknowledgmentName }: NameInputProps) => {
-  return (<div className="max-w-[34rem] mb-10 py-6 border-b border-mid-soft animate-in fade-in slide-in-from-top-2 duration-300">
+  return (<div className="w-full animate-in fade-in slide-in-from-top-2 duration-300">
     <label className="block text-xs font-semibold tracking-wider uppercase text-ink-muted mb-2.5">
       Can we thank you publicly? Name for acknowledgment (optional):
     </label>
@@ -76,7 +76,7 @@ export function PreorderSection({
   };
 
   return (
-    <section className="py-16 px-6 max-w-[60rem] mx-auto bg-mid-soft">
+    <section className="py-16 px-6 max-w-200 mx-auto bg-mid-soft">
       <div className="section-subtitle">Summer 2026</div>
       <h2 className="font-serif text-[1.875rem] font-medium leading-tight mb-2">Choose Your Format</h2>
       <div className="ornament text-gold text-center text-xl mb-9"></div>
@@ -159,19 +159,22 @@ export function PreorderSection({
                   />
                 );
               })}
-              <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
-
-              <div className="mt-10 flex flex-wrap items-center gap-5">
-                <Button
-                  onClick={() => addToCart('sewn')}
-                  disabled={hasItemsInFormat('sewn') && isFormatMissingSelection('sewn')}
-                  className={`bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium transition-all ${hasItemsInFormat('sewn') && isFormatMissingSelection('sewn') ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
-                >
-                  Add to Cart
-                </Button>
-                <span className="text-xs italic text-ink-muted">Charged now · Ships summer 2026 · Ebook included free</span>
+              <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                <div className="w-full md:max-w-[34rem]">
+                  <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
+                </div>
+                <div className="w-full md:w-auto md:self-end flex justify-end">
+                  <Button
+                    onClick={() => addToCart('sewn')}
+                    disabled={hasItemsInFormat('sewn') && isFormatMissingSelection('sewn')}
+                    className={`bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium transition-all ${hasItemsInFormat('sewn') && isFormatMissingSelection('sewn') ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
               </div>
+              <p className="mt-3 text-xs italic text-ink-muted">Charged now · Ships summer 2026 · Ebook included free</p>
             </TabsContent>
 
             {/*<TabsContent value="Hardcover" className="space-y-0 mt-0">
@@ -245,16 +248,20 @@ export function PreorderSection({
                   />
                 );
               })}
-              <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
-              <div className="mt-10 flex flex-wrap items-center gap-5">
-                <Button
-                  onClick={() => addToCart('hardcover_dj')}
-                  disabled={hasItemsInFormat('hardcover_dj') && isFormatMissingSelection('hardcover_dj')}
-                  className={`bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium transition-all ${hasItemsInFormat('hardcover_dj') && isFormatMissingSelection('hardcover_dj') ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
-                >
-                  Add to Cart
-                </Button>
+              <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                <div className="w-full md:max-w-[34rem]">
+                  <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
+                </div>
+                <div className="w-full md:w-auto md:self-end flex justify-end">
+                  <Button
+                    onClick={() => addToCart('hardcover_dj')}
+                    disabled={hasItemsInFormat('hardcover_dj') && isFormatMissingSelection('hardcover_dj')}
+                    className={`bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium transition-all ${hasItemsInFormat('hardcover_dj') && isFormatMissingSelection('hardcover_dj') ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
               </div>
             </TabsContent>
 
@@ -288,16 +295,20 @@ export function PreorderSection({
                   />
                 );
               })}
-              <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
-              <div className="mt-10 flex flex-wrap items-center gap-5">
-                <Button
-                  onClick={() => addToCart('paperback')}
-                  disabled={hasItemsInFormat('paperback') && isFormatMissingSelection('paperback')}
-                  className={`bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium transition-all ${hasItemsInFormat('paperback') && isFormatMissingSelection('paperback') ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
-                >
-                  Add to Cart
-                </Button>
+              <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                <div className="w-full md:max-w-[34rem]">
+                  <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
+                </div>
+                <div className="w-full md:w-auto md:self-end flex justify-end">
+                  <Button
+                    onClick={() => addToCart('paperback')}
+                    disabled={hasItemsInFormat('paperback') && isFormatMissingSelection('paperback')}
+                    className={`bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium transition-all ${hasItemsInFormat('paperback') && isFormatMissingSelection('paperback') ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
               </div>
             </TabsContent>
 
@@ -326,14 +337,18 @@ export function PreorderSection({
                 </div>
                 <p className="text-xs italic text-moss mt-4 font-medium">✓ Ebooks are included free with any print order — no need to add them separately.</p>
               </div>
-              <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
-              <div className="mt-6">
-                <Button
-                  onClick={() => addToCart('ebooks')}
-                  className="bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
-                >
-                  Add to Cart
-                </Button>
+              <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                <div className="w-full md:max-w-[34rem]">
+                  <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
+                </div>
+                <div className="w-full md:w-auto md:self-end flex justify-end">
+                  <Button
+                    onClick={() => addToCart('ebooks')}
+                    className=" bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
               </div>
             </TabsContent>
           </Tabs>
