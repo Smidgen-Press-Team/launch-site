@@ -7,7 +7,7 @@ interface HeroProps {
 
 export function Hero({ totalQuantity, onOpenCart }: HeroProps) {
   return (
-    <header className="bg-ink text-parchment text-center px-6 py-18 md:py-24">
+    <header className="bg-ink text-parchment text-center px-6 py-18 md:py-24 " role="banner">
       <div className="hero-label">Smidgen Press · Summer 2026 Print Run</div>
       <div className="flex justify-center mb-4">
         <Button

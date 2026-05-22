@@ -69,12 +69,12 @@ export default function App() {
         totalQuantity={totalQuantity || 0}
         onOpenCart={() => setIsCartOpen(true)}
       />
-      <div><img src={mockup} className="md:p-20" /></div>
+      <div><img src={mockup} alt="Smidgen Press Charlotte Mason Home Education Series mockup" className="md:p-20" /></div>
 
 
       <DeadlineBanner />
 
-      <section className="bg-cream-card md:border-b border-border-soft py-14 px-6">
+      <section className="bg-cream-card md:border-b border-border-soft py-14 px-6" role="main">
         <div className="max-w-[60rem] mx-auto">
           <div className="section-subtitle mb-2">The complete works of Charlotte Mason</div>
           <h2 className="font-serif text-[1.875rem] font-medium leading-tight mb-8">A Six-Volume Journey</h2>
@@ -82,7 +82,7 @@ export default function App() {
         </div>
       </section>
       <section>
-        <img className="m-auto items-center md:p-20" src={features} />
+        <img className="m-auto items-center md:p-20" src={features} alt="Illustration highlighting features of the Charlotte Mason Home Education Series" />
       </section>
       <div className="w-full m-auto bg-mid-soft">
         <PreorderSection
