@@ -69,7 +69,8 @@ export default function App() {
         totalQuantity={totalQuantity || 0}
         onOpenCart={() => setIsCartOpen(true)}
       />
-      <img src={mockup} />
+      <div><img src={mockup} className="md:p-20" /></div>
+
 
       <DeadlineBanner />
 
