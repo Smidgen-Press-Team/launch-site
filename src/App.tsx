@@ -1,5 +1,5 @@
-import features from "@/assets/features.png";
-import mockup from "@/assets/mockup.png";
+import features from "@/assets/features.webp";
+import mockup from "@/assets/mockup.webp";
 import { CartDrawer } from "@/components/CartDrawer";
 import { DeadlineBanner } from "@/components/DeadlineBanner";
 import { Footer } from "@/components/Footer";
