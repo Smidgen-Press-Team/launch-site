@@ -69,20 +69,22 @@ export default function App() {
         totalQuantity={totalQuantity || 0}
         onOpenCart={() => setIsCartOpen(true)}
       />
+      <DeadlineBanner />
       <div><img src={mockup} alt="Smidgen Press Charlotte Mason Home Education Series mockup" className="md:p-20 m-auto" /></div>
 
 
-      <DeadlineBanner />
+
 
       <section className="bg-cream-card md:border-b border-border-soft py-14 px-6" role="main">
         <div className="max-w-[60rem] mx-auto">
-          <div className="section-subtitle mb-2">The complete works of Charlotte Mason</div>
+          <div className="section-subtitle mb-2">The Home Education Series by Charlotte Mason
+          </div>
           <h2 className="font-serif text-[1.875rem] font-medium leading-tight mb-8">A Six-Volume Journey</h2>
           <Timeline />
         </div>
       </section>
       <section>
-        <img className="m-auto items-center md:p-20" src={features} alt="Illustration highlighting features of the Charlotte Mason Home Education Series" />
+        <img className="m-auto items-center md:w-200 md:py-14" src={features} alt="Illustration highlighting features of the Charlotte Mason Home Education Series" />
       </section>
       <div className="w-full m-auto bg-mid-soft">
         <PreorderSection

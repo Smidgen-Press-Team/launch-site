@@ -8,8 +8,7 @@ interface HeroProps {
 export function Hero({ totalQuantity, onOpenCart }: HeroProps) {
   return (
     <header className="bg-ink text-parchment text-center px-6 py-18 md:py-24 " role="banner">
-      <div className="hero-label">Smidgen Press · Summer 2026 Print Run</div>
-      <div className="flex justify-center mb-4">
+      <div className="flex justify-end mb-4">
         <Button
           variant="outline"
           onClick={onOpenCart}
@@ -18,6 +17,8 @@ export function Hero({ totalQuantity, onOpenCart }: HeroProps) {
           Cart ({totalQuantity || 0})
         </Button>
       </div>
+      <div className="hero-label">Limited Print Run 2026 · Archival Editions</div>
+
       <h1 className="text-4xl md:text-6xl font-normal leading-tight mb-5 max-w-4xl mx-auto">
         The Charlotte Mason<br />
         <em className="italic text-gold-light">Home Education Series</em>
