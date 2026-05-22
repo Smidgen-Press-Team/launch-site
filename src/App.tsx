@@ -69,7 +69,7 @@ export default function App() {
         totalQuantity={totalQuantity || 0}
         onOpenCart={() => setIsCartOpen(true)}
       />
-      <div><img src={mockup} alt="Smidgen Press Charlotte Mason Home Education Series mockup" className="md:p-20" /></div>
+      <div><img src={mockup} alt="Smidgen Press Charlotte Mason Home Education Series mockup" className="md:p-20 m-auto" /></div>
 
 
       <DeadlineBanner />
