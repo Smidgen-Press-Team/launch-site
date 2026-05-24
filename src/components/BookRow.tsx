@@ -75,6 +75,12 @@ export function BookRow({
             )}
           </div>
 
+          {options.length <= 1 || !onOptionChange ? (
+            <div className="md:hidden">
+              <QuantityControl value={quantity} onChange={onQuantityChange} />
+            </div>
+          ) : null}
+
           {options.length > 1 && onOptionChange && (
             <div className="flex w-full items-end gap-3 md:block md:w-50">
               <div className="flex-1 md:w-auto">
