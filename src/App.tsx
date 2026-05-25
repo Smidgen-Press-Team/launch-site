@@ -85,7 +85,7 @@ export default function App() {
         </div>
       </section>
       <section>
-        <img className="m-auto items-center md:w-200 md:py-14" src={compare} alt="Comparison of the Filigree and Typography hardcover formats" />
+        <img className="m-auto items-center md:w-150 md:py-14" src={compare} alt="Comparison of the Filigree and Typography hardcover formats" />
       </section>
       <div className="w-full m-auto bg-mid-soft">
         <PreorderSection
