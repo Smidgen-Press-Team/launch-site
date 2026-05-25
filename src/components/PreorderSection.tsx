@@ -225,7 +225,7 @@ export function PreorderSection({
               {PRODUCT_CONFIG.hardcover_dj.map(book => {
                 const volKey = `hardcover_dj-${book.vol}`;
                 const selectedId = selectedOptions[volKey];
-                const variant = getVariant(selectedId, '35.00');
+                const variant = getVariant(selectedId, '40.00');
                 return (
                   <BookRow
                     key={volKey}
