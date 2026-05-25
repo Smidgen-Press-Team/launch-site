@@ -1,3 +1,4 @@
+import compare from "@/assets/compare.jpg";
 import features from "@/assets/features.webp";
 import mockup from "@/assets/mockup.webp";
 import { CartDrawer } from "@/components/CartDrawer";
@@ -11,7 +12,6 @@ import { usePreorderCart } from '@/hooks/usePreorderCart';
 import { usePreorderPrices } from '@/hooks/usePreorderPrices';
 import { useCart } from '@shopify/hydrogen-react';
 import { useEffect, useState } from 'react';
-import { FAQs } from "./components/FAQ";
 
 export default function App() {
   const {
@@ -64,6 +64,7 @@ export default function App() {
         acknowledgmentName={acknowledgmentName}
         setAcknowledgmentName={setAcknowledgmentName}
       />
+      <div className="p-2 justify-center items-center bg-gold text-white w-full flex"><span>Discount codes and full FAQ: <a href="https://smidgenpress.com/home-education-series-faqs" target="_blank" className="underline hover:text-black">View the guide →</a></span></div>
 
       <Hero
         totalQuantity={totalQuantity || 0}
@@ -84,7 +85,7 @@ export default function App() {
         </div>
       </section>
       <section>
-        <img className="m-auto items-center md:w-200 md:py-14" src={features} alt="Illustration highlighting features of the Charlotte Mason Home Education Series" />
+        <img className="m-auto items-center md:w-200 md:py-14" src={compare} alt="Comparison of the Filigree and Typography hardcover formats" />
       </section>
       <div className="w-full m-auto bg-mid-soft">
         <PreorderSection
@@ -103,9 +104,12 @@ export default function App() {
           prices={prices}
         />
       </div>
+      <section>
+        <img className="m-auto items-center md:w-200 md:py-14" src={features} alt="Illustration highlighting features of the Charlotte Mason Home Education Series" />
+      </section>
 
       <PerksSection />
-      <FAQs></FAQs>
+      {/*<FAQs></FAQs>*/}
 
       <Footer />
     </div>

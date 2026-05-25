@@ -7,8 +7,9 @@ interface HeroProps {
 
 export function Hero({ totalQuantity, onOpenCart }: HeroProps) {
   return (
-    <header className="bg-ink text-parchment text-center px-6 py-18 md:py-24 " role="banner">
-      <div className="flex justify-end mb-4">
+    <header className="bg-ink text-parchment text-center px-6 pb-18 md:pb-24 pt-8" role="banner">
+
+      <div className="flex justify-end mb-4 mt-4">
         <Button
           variant="outline"
           onClick={onOpenCart}
@@ -24,7 +25,7 @@ export function Hero({ totalQuantity, onOpenCart }: HeroProps) {
         <em className="italic text-gold-light">Home Education Series</em>
       </h1>
       <p className="text-lg md:text-xl max-w-[34rem] mx-auto mb-8 leading-normal">
-        A faithful restoration of Charlotte Mason's complete writings — bound to last generations. Preorder your copies and become part of the story.
+        Stage Two is here — Volumes 2 & 3 are ready for preorder. Reserve your Smyth-sewn archival hardcovers for all four editions (Vols 1, 2, 3 & 6) while this 2026 print run is open.
       </p>
     </header>
   );

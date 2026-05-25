@@ -29,8 +29,8 @@ export function PerksSection() {
 
           <PerkCard
 
-            name="Mr. Placeholder"
-            description="A super great placeholder"
+            name="Kirsten T."
+            description="&quot;Beautifully designed and a pleasure to read, this edition breathes fresh life into Charlotte Mason’s timeless wisdom for a new generation of homeschool mothers.&quot; "
           />
         </div>
       </div>
