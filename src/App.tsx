@@ -61,8 +61,6 @@ export default function App() {
         checkoutUrl={checkoutUrl}
         status={status}
         attributes={attributes}
-        acknowledgmentName={acknowledgmentName}
-        setAcknowledgmentName={setAcknowledgmentName}
       />
       <div className="p-2 justify-center items-center bg-gold text-white w-full flex"><span>Discount codes and full FAQ: <a href="https://smidgenpress.com/home-education-series-faqs" target="_blank" className="underline hover:text-black">View the guide →</a></span></div>
 
