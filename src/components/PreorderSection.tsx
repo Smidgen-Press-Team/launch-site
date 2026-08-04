@@ -19,27 +19,28 @@ interface PreorderSectionProps {
   getPrice: (id: string, defaultAmount: string) => { amount: string; currencyCode: string };
   prices: Record<string, ProductVariant>;
 }
+
 interface NameInputProps {
   acknowledgmentName: string;
   setAcknowledgmentName: (name: string) => void;
 }
 
-const NameInput = ({ acknowledgmentName,
-  setAcknowledgmentName }: NameInputProps) => {
-  return (<div className="w-full animate-in fade-in slide-in-from-top-2 duration-300">
-    <label className="block text-xs font-semibold tracking-wider uppercase text-ink-muted mb-2.5">
-      Can we thank you publicly? Name for acknowledgment (optional):
-    </label>
-    <input
-      type="text"
-      value={acknowledgmentName}
-      onChange={(e) => setAcknowledgmentName(e.target.value)}
-      placeholder="How should your name appear in the book?"
-      className="w-full bg-white border border-border-custom rounded-[2px] px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
-    />
-  </div>)
-}
-
+const NameInput = ({ acknowledgmentName, setAcknowledgmentName }: NameInputProps) => {
+  return (
+    <div className="w-full animate-in fade-in slide-in-from-top-2 duration-300">
+      <label className="block text-xs font-semibold tracking-wider uppercase text-ink-muted mb-2.5">
+        Can we thank you publicly? Name for acknowledgment (optional):
+      </label>
+      <input
+        type="text"
+        value={acknowledgmentName}
+        onChange={(e) => setAcknowledgmentName(e.target.value)}
+        placeholder="How should your name appear in the book?"
+        className="w-full bg-white border border-border-custom rounded-[2px] px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
+      />
+    </div>
+  );
+};
 export function PreorderSection({
   isLoading,
   acknowledgmentName,
@@ -159,11 +160,11 @@ export function PreorderSection({
                   />
                 );
               })}
-              <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div className="mt-8 grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
                 <div className="w-full md:max-w-[34rem]">
                   <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
                 </div>
-                <div className="w-full md:w-auto md:self-end flex justify-end">
+                <div className="w-full md:w-auto md:justify-self-end">
                   <Button
                     onClick={() => addToCart('sewn')}
                     disabled={hasItemsInFormat('sewn') && isFormatMissingSelection('sewn')}
@@ -248,11 +249,11 @@ export function PreorderSection({
                   />
                 );
               })}
-              <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div className="mt-8 grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
                 <div className="w-full md:max-w-[34rem]">
                   <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
                 </div>
-                <div className="w-full md:w-auto md:self-end flex justify-end">
+                <div className="w-full md:w-auto md:justify-self-end">
                   <Button
                     onClick={() => addToCart('hardcover_dj')}
                     disabled={hasItemsInFormat('hardcover_dj') && isFormatMissingSelection('hardcover_dj')}
@@ -295,11 +296,11 @@ export function PreorderSection({
                   />
                 );
               })}
-              <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div className="mt-8 grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
                 <div className="w-full md:max-w-[34rem]">
                   <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
                 </div>
-                <div className="w-full md:w-auto md:self-end flex justify-end">
+                <div className="w-full md:w-auto md:justify-self-end">
                   <Button
                     onClick={() => addToCart('paperback')}
                     disabled={hasItemsInFormat('paperback') && isFormatMissingSelection('paperback')}
@@ -337,11 +338,11 @@ export function PreorderSection({
                 </div>
                 <p className="text-xs italic text-moss mt-4 font-medium">✓ Ebooks are included free with any print order — no need to add them separately.</p>
               </div>
-              <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div className="mt-8 grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
                 <div className="w-full md:max-w-[34rem]">
                   <NameInput acknowledgmentName={acknowledgmentName} setAcknowledgmentName={setAcknowledgmentName} />
                 </div>
-                <div className="w-full md:w-auto md:self-end flex justify-end">
+                <div className="w-full md:w-auto md:justify-self-end">
                   <Button
                     onClick={() => addToCart('ebooks')}
                     className=" bg-ink hover:bg-moss text-parchment rounded-[2px] px-10 py-6 h-auto tracking-[0.15em] uppercase text-xs font-medium"
