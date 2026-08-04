@@ -12,8 +12,6 @@ interface CartDrawerProps {
   checkoutUrl?: string;
   status: string;
   attributes?: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
-  acknowledgmentName?: string;
-  setAcknowledgmentName?: (name: string) => void;
 }
 
 function idToTitleMap(id: string): string | null {
@@ -31,9 +29,7 @@ export function CartDrawer({
   linesUpdate,
   checkoutUrl,
   status,
-  attributes,
-  acknowledgmentName = "",
-  setAcknowledgmentName
+  attributes
 }: CartDrawerProps) {
   if (!isOpen) return null;
 
@@ -112,18 +108,6 @@ export function CartDrawer({
           )}
         </div>
         <div className="p-6 border-t border-border-soft space-y-4 bg-cream-card">
-          <div className="space-y-2 mb-4">
-            <label className="block text-[10px] font-semibold tracking-wider uppercase text-ink-muted">
-              Acknowledgment Name (Optional)
-            </label>
-            <input
-              type="text"
-              value={acknowledgmentName}
-              onChange={(e) => setAcknowledgmentName?.(e.target.value)}
-              placeholder="How should your name appear?"
-              className="w-full bg-white border border-border-custom rounded-[2px] px-3 py-2 text-sm focus:outline-none focus:border-gold transition-colors"
-            />
-          </div>
           <div className="flex justify-between text-lg font-serif font-semibold">
             <span>Subtotal</span>
             <span>${subtotal.toFixed(2)}</span>
