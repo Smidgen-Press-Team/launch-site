@@ -90,7 +90,9 @@ export function PreorderSection({
 
           <Tabs defaultValue="Sewn" className="w-full">
             <TabsList
-              className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-2 h-auto gap-px p-px bg-border-custom rounded-[3px] overflow-hidden w-full mb-8"
+              // className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-2 h-auto gap-px p-px bg-border-custom rounded-[3px] overflow-hidden w-full mb-8"
+              className="grid grid-cols-1 h-auto gap-px p-px bg-border-custom rounded-[3px] overflow-hidden w-full mb-8"
+
             >
               <TabsTrigger
                 value="Sewn"
@@ -98,30 +100,33 @@ export function PreorderSection({
               >
                 Premium hardcover <span className="text-[10px] lowercase normal-case opacity-80">$55 / vol</span>
               </TabsTrigger>
-              <TabsTrigger
+              {/* <TabsTrigger
+                disabled
                 value="Hardcover-DJ"
                 className="data-active:bg-ink data-active:text-parchment rounded-none bg-cream-card w-full h-full py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
                 Standard hardcover <span className="text-[10px] lowercase normal-case opacity-80">$40 / vol</span>
-              </TabsTrigger>
+              </TabsTrigger> */}
               {/*<TabsTrigger
                 value="Hardcover"
                 className="data-active:bg-ink data-active:text-parchment rounded-none bg-cream-card w-full h-full py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
                 Hardcover (No Jacket) <span className="text-[10px] lowercase normal-case opacity-80">$33 / vol</span>
               </TabsTrigger>*/}
-              <TabsTrigger
+              {/* <TabsTrigger
+                disabled
                 value="Paperback"
                 className="data-active:bg-ink data-active:text-parchment rounded-none bg-cream-card w-full h-full py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
                 Paperback <span className="text-[10px] lowercase normal-case opacity-80">$25 / vol</span>
               </TabsTrigger>
               <TabsTrigger
+                disabled
                 value="Kindle/EPUB"
                 className="data-active:bg-ink data-active:text-parchment rounded-none bg-cream-card w-full h-full py-3.5 px-4 text-xs font-medium tracking-[0.1em] uppercase flex flex-col gap-1"
               >
                 EPUB & PDF <span className="text-[10px] lowercase normal-case opacity-80">$10</span>
-              </TabsTrigger>
+              </TabsTrigger> */}
               {/*<TabsTrigger value="__placeholder"
                 disabled
                 aria-hidden="true"
